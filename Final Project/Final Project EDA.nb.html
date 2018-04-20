@@ -173,20 +173,65 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<div id="project-datasets-overview" class="section level2">
-<h2>Project &amp; Datasets Overview</h2>
-<p>This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 “compounds” or rural towns. Each compound represents at least 1 pregnant woman in her second trimester. <a href="http://bmjopen.bmj.com/content/3/8/e003476.short">This article was a helpful reference</a> for understanding the study design.</p>
+<hr />
+<div id="project-overview" class="section level3">
+<h3>Project Overview</h3>
+<hr />
+<p>This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 “compounds” or rural towns, grouped into 720 clusters. Each compound represents at least 1 pregnant woman in her second trimester. <a href="http://bmjopen.bmj.com/content/3/8/e003476.short">This article was a helpful reference</a> for understanding the study design. <a href="https://osf.io/wvyn4/">This is the Open Science Framework (OSF) home</a> of the data.</p>
+<hr />
+</div>
+<div id="relevant-datasets-overview" class="section level3">
+<h3>Relevant Datasets Overview</h3>
+<hr />
+<div id="treatment-assignments-washb-bangladesh-tr-public" class="section level5">
+<h5>Treatment Assignments (<code>washb-bangladesh-tr-public</code>)</h5>
+<p>The 720 rows (each representing a cluster) are divied into a 8 clusters x 90 blocks format. The 8 clusters <strong>within</strong> a block are all proximal to each other and are seperated by a minimum of 1km. Sequential blocks are not necessarily proximal. The data is keyed on <code>clusterid</code>. Within each block, 6 clusters were designated as unique intervention arms and 2 were reserved for a double-sized control arm.</p>
+</div>
+<div id="enrollment-characteristics-washb-bangladesh-enrol-public" class="section level5">
+<h5>Enrollment Characteristics (<code>washb-bangladesh-enrol-public</code>)</h5>
+<p>The file includes 5,551 rows (each representing an enrolled compound), and maps to compound characteristics</p>
+</div>
+<div id="adherence-washb-bangladesh-uptake-public" class="section level5">
+<h5>Adherence (<code>washb-bangladesh-uptake-public</code>)</h5>
+<p>The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 should. Adherence was also measured via counts of lipid-based nutrient supplements (<code>lnsn</code>, <code>lnsp</code>) and those reported by the mother in the last week (<code>rlsn</code>, <code>rlnsp</code>). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or &gt; 28 are implausible</p>
+</div>
+<div id="diarrhea-measurements-washb-bangladesh-diar-public" class="section level5">
+<h5>Diarrhea Measurements (<code>washb-bangladesh-diar-public</code>)</h5>
+<p>This file includes 22,594 observations, measuring diarrheal status from children from the birth cohort and children living in the compound who were &lt;36 months at enrollment time. Notably, <code>tchild</code> takes on the value <code>Target child</code> or <code>Sibling</code>, where <code>Sibling</code> refers to not only true siblings, but also age-eligible children from other families in the same compound.</p>
+<p>Diarrhea was defined as &gt;= 3 loose or watery stools in 24 hours or &gt;= 1 stool with blood over the 7 days prior to measurement.</p>
+<hr />
+</div>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBIZXkgZ3V5c1xuYGBgIn0= -->
-<pre class="r"><code># Hey guys</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbXBvcnRpbmcgTGlicmFyaWVzXG5saWJyYXJ5KGRwbHlyKVxubGlicmFyeShEYXRhRXhwbG9yZXIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5cblxuIyBTZXR0aW5nIEZpbGUgUGF0aHNcbnNldHdkKFwifi9QSDI0MS9GaW5hbCBQcm9qZWN0L0RhdGFcIilcbmZpbGVwYXRocyA9IGMoXCJ3YXNoYi1iYW5nbGFkZXNoLXRyLXB1YmxpYy5jc3ZcIixcbiAgICAgICAgICAgICAgXCJ3YXNoYi1iYW5nbGFkZXNoLWVucm9sLXB1YmxpYy5jc3ZcIixcbiAgICAgICAgICAgICAgXCJ3YXNoYi1iYW5nbGFkZXNoLXVwdGFrZS1wdWJsaWMuY3N2XCIsXG4gICAgICAgICAgICAgIFwid2FzaGItYmFuZ2xhZGVzaC1kaWFyLXB1YmxpYy5jc3ZcIlxuICAgICAgICAgICAgICApXG5cbmNvbXBvdW5kVHJlYXRtZW50ICAgICAgID0gZnJlYWQoZmlsZXBhdGhzWzFdLCBkYXRhLnRhYmxlPUZBTFNFKVxuY29tcG91bmRDaGFyYWN0ZXJpc3RpY3MgPSBmcmVhZChmaWxlcGF0aHNbMl0sIGRhdGEudGFibGU9RkFMU0UpXG5jb21wb3VuZEFkaGVyZW5jZSAgICAgICA9IGZyZWFkKGZpbGVwYXRoc1szXSwgZGF0YS50YWJsZT1GQUxTRSlcbmRpYXJyaGVhTWVhc3VybWVudCAgICAgID0gZnJlYWQoZmlsZXBhdGhzWzRdLCBkYXRhLnRhYmxlPUZBTFNFKVxuYGBgIn0= -->
+<pre class="r"><code># Importing Libraries
+library(dplyr)
+library(DataExplorer)
+library(data.table)
+
+
+# Setting File Paths
+setwd(&quot;~/PH241/Final Project/Data&quot;)
+filepaths = c(&quot;washb-bangladesh-tr-public.csv&quot;,
+              &quot;washb-bangladesh-enrol-public.csv&quot;,
+              &quot;washb-bangladesh-uptake-public.csv&quot;,
+              &quot;washb-bangladesh-diar-public.csv&quot;
+              )
+
+compoundTreatment       = fread(filepaths[1], data.table=FALSE)
+compoundCharacteristics = fread(filepaths[2], data.table=FALSE)
+compoundAdherence       = fread(filepaths[3], data.table=FALSE)
+diarrheaMeasurment      = fread(filepaths[4], data.table=FALSE)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUEgyNDEgRmluYWwgUHJvamVjdCBFREEiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMjIFByb2plY3QgJiBEYXRhc2V0cyBPdmVydmlldwoKVGhpcyBwcm9qZWN0IHdpbGwgYmUgYW4gYW5hbHlzaXMgb2YgdGhlIFdBU0ggQmVuZWZpdHMgQmFuZ2xhZGVzaCB0cmlhbCBsb29raW5nIGF0IDUsNTUxICJjb21wb3VuZHMiIG9yIHJ1cmFsIHRvd25zLiBFYWNoIGNvbXBvdW5kIHJlcHJlc2VudHMgYXQgbGVhc3QgMSBwcmVnbmFudCB3b21hbiBpbiBoZXIgc2Vjb25kIHRyaW1lc3Rlci4gW1RoaXMgYXJ0aWNsZSB3YXMgYSBoZWxwZnVsIHJlZmVyZW5jZV0oaHR0cDovL2Jtam9wZW4uYm1qLmNvbS9jb250ZW50LzMvOC9lMDAzNDc2LnNob3J0KSAgZm9yIHVuZGVyc3RhbmRpbmcgdGhlIHN0dWR5IGRlc2lnbi4KCgoKYGBge3J9CiMgSGV5IGd1eXMKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUEgyNDEgRmluYWwgUHJvamVjdCBFREEiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KKioqCiMjIyBQcm9qZWN0IE92ZXJ2aWV3CioqKgoKVGhpcyBwcm9qZWN0IHdpbGwgYmUgYW4gYW5hbHlzaXMgb2YgdGhlIFdBU0ggQmVuZWZpdHMgQmFuZ2xhZGVzaCB0cmlhbCBsb29raW5nIGF0IDUsNTUxICJjb21wb3VuZHMiIG9yIHJ1cmFsIHRvd25zLCBncm91cGVkIGludG8gNzIwIGNsdXN0ZXJzLiBFYWNoIGNvbXBvdW5kIHJlcHJlc2VudHMgYXQgbGVhc3QgMSBwcmVnbmFudCB3b21hbiBpbiBoZXIgc2Vjb25kIHRyaW1lc3Rlci4gW1RoaXMgYXJ0aWNsZSB3YXMgYSBoZWxwZnVsIHJlZmVyZW5jZV0oaHR0cDovL2Jtam9wZW4uYm1qLmNvbS9jb250ZW50LzMvOC9lMDAzNDc2LnNob3J0KSBmb3IgdW5kZXJzdGFuZGluZyB0aGUgc3R1ZHkgZGVzaWduLiBbVGhpcyBpcyB0aGUgT3BlbiBTY2llbmNlIEZyYW1ld29yayAoT1NGKSBob21lXShodHRwczovL29zZi5pby93dnluNC8pIG9mIHRoZSBkYXRhLgoKKioqCiMjIyBSZWxldmFudCBEYXRhc2V0cyBPdmVydmlldwoqKioKCiMjIyMjIFRyZWF0bWVudCBBc3NpZ25tZW50cyAoYHdhc2hiLWJhbmdsYWRlc2gtdHItcHVibGljYCkKVGhlIDcyMCByb3dzIChlYWNoIHJlcHJlc2VudGluZyBhIGNsdXN0ZXIpIGFyZSBkaXZpZWQgaW50byBhIDggY2x1c3RlcnMgeCA5MCBibG9ja3MgZm9ybWF0LiBUaGUgOCBjbHVzdGVycyAqKndpdGhpbioqIGEgYmxvY2sgYXJlIGFsbCBwcm94aW1hbCB0byBlYWNoIG90aGVyIGFuZCBhcmUgc2VwZXJhdGVkIGJ5IGEgbWluaW11bSBvZiAxa20uIFNlcXVlbnRpYWwgYmxvY2tzIGFyZSBub3QgbmVjZXNzYXJpbHkgcHJveGltYWwuIFRoZSBkYXRhIGlzIGtleWVkIG9uIGBjbHVzdGVyaWRgLiBXaXRoaW4gZWFjaCBibG9jaywgNiBjbHVzdGVycyB3ZXJlIGRlc2lnbmF0ZWQgYXMgdW5pcXVlIGludGVydmVudGlvbiBhcm1zIGFuZCAyIHdlcmUgcmVzZXJ2ZWQgZm9yIGEgZG91YmxlLXNpemVkIGNvbnRyb2wgYXJtLgoKIyMjIyMgRW5yb2xsbWVudCBDaGFyYWN0ZXJpc3RpY3MgKGB3YXNoYi1iYW5nbGFkZXNoLWVucm9sLXB1YmxpY2ApClRoZSBmaWxlIGluY2x1ZGVzIDUsNTUxIHJvd3MgKGVhY2ggcmVwcmVzZW50aW5nIGFuIGVucm9sbGVkIGNvbXBvdW5kKSwgYW5kIG1hcHMgdG8gY29tcG91bmQgY2hhcmFjdGVyaXN0aWNzCgojIyMjIyBBZGhlcmVuY2UgKGB3YXNoYi1iYW5nbGFkZXNoLXVwdGFrZS1wdWJsaWNgKQpUaGUgZmlsZSBpbmNsdWRlcyAxNCw5MDYgcm93cyB3aGljaCBtYXAgdG8gYSB1bmlxdWUgKGNvbXBvdW5kLCBkYXRlKSBtZWFzdXJlbWVudC4gQXR0cml0aW9uIGFjcm9zcyB0aGUgMyB5ZWFycyBtZWFucyB0aGF0IGV2ZXJ5IGNvbXBvdW5kIGRvZXMgbm90IGhhdmUgMyBtZWFzdXJlbWVudHMsIGJ1dCA0NjM5IHNob3VsZC4gQWRoZXJlbmNlIHdhcyBhbHNvIG1lYXN1cmVkIHZpYSBjb3VudHMgb2YgbGlwaWQtYmFzZWQgbnV0cmllbnQgc3VwcGxlbWVudHMgKGBsbnNuYCwgYGxuc3BgKSBhbmQgdGhvc2UgcmVwb3J0ZWQgYnkgdGhlIG1vdGhlciBpbiB0aGUgbGFzdCB3ZWVrIChgcmxzbmAsIGBybG5zcGApLiBUaGUgZXhwZWN0ZWQgbnVtYmVyIGZvciAxMDAlIGFkaGVyZW5jZSBpcyAyIHNhY2hldHMgeCA3IGRheXMgPSAxNCBzYWNoZXRzL3dlZWsuIFZhbHVlcyB0aGF0IGFyZSBuZWdhdGl2ZSBvciA+IDI4IGFyZSBpbXBsYXVzaWJsZQoKIyMjIyMgRGlhcnJoZWEgTWVhc3VyZW1lbnRzIChgd2FzaGItYmFuZ2xhZGVzaC1kaWFyLXB1YmxpY2ApClRoaXMgZmlsZSBpbmNsdWRlcyAyMiw1OTQgb2JzZXJ2YXRpb25zLCBtZWFzdXJpbmcgZGlhcnJoZWFsIHN0YXR1cyBmcm9tIGNoaWxkcmVuIGZyb20gdGhlIGJpcnRoIGNvaG9ydCBhbmQgY2hpbGRyZW4gbGl2aW5nIGluIHRoZSBjb21wb3VuZCB3aG8gd2VyZSA8MzYgbW9udGhzIGF0IGVucm9sbG1lbnQgdGltZS4gTm90YWJseSwgYHRjaGlsZGAgdGFrZXMgb24gdGhlIHZhbHVlIGBUYXJnZXQgY2hpbGRgIG9yIGBTaWJsaW5nYCwgd2hlcmUgYFNpYmxpbmdgIHJlZmVycyB0byBub3Qgb25seSB0cnVlIHNpYmxpbmdzLCBidXQgYWxzbyBhZ2UtZWxpZ2libGUgY2hpbGRyZW4gZnJvbSBvdGhlciBmYW1pbGllcyBpbiB0aGUgc2FtZSBjb21wb3VuZC4gCgpEaWFycmhlYSB3YXMgZGVmaW5lZCBhcyA+PSAzIGxvb3NlIG9yIHdhdGVyeSBzdG9vbHMgaW4gMjQgaG91cnMgb3IgPj0gMSBzdG9vbCB3aXRoIGJsb29kIG92ZXIgdGhlIDcgZGF5cyBwcmlvciB0byBtZWFzdXJlbWVudC4gCgoqKioKIyMjIFNldHVwCmBgYHtyfQojIEltcG9ydGluZyBMaWJyYXJpZXMKbGlicmFyeShkcGx5cikKbGlicmFyeShEYXRhRXhwbG9yZXIpCmxpYnJhcnkoZGF0YS50YWJsZSkKCgojIFNldHRpbmcgRmlsZSBQYXRocwpzZXR3ZCgifi9QSDI0MS9GaW5hbCBQcm9qZWN0L0RhdGEiKQpmaWxlcGF0aHMgPSBjKCJ3YXNoYi1iYW5nbGFkZXNoLXRyLXB1YmxpYy5jc3YiLAogICAgICAgICAgICAgICJ3YXNoYi1iYW5nbGFkZXNoLWVucm9sLXB1YmxpYy5jc3YiLAogICAgICAgICAgICAgICJ3YXNoYi1iYW5nbGFkZXNoLXVwdGFrZS1wdWJsaWMuY3N2IiwKICAgICAgICAgICAgICAid2FzaGItYmFuZ2xhZGVzaC1kaWFyLXB1YmxpYy5jc3YiCiAgICAgICAgICAgICAgKQoKY29tcG91bmRUcmVhdG1lbnQgICAgICAgPSBmcmVhZChmaWxlcGF0aHNbMV0sIGRhdGEudGFibGU9RkFMU0UpCmNvbXBvdW5kQ2hhcmFjdGVyaXN0aWNzID0gZnJlYWQoZmlsZXBhdGhzWzJdLCBkYXRhLnRhYmxlPUZBTFNFKQpjb21wb3VuZEFkaGVyZW5jZSAgICAgICA9IGZyZWFkKGZpbGVwYXRoc1szXSwgZGF0YS50YWJsZT1GQUxTRSkKZGlhcnJoZWFNZWFzdXJtZW50ICAgICAgPSBmcmVhZChmaWxlcGF0aHNbNF0sIGRhdGEudGFibGU9RkFMU0UpCmBgYAoKCgoKCgoKCgoKCgoKCgo=</div>
 
 
 

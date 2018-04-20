@@ -2,14 +2,64 @@
 title: "PH241 Final Project EDA"
 output: html_notebook
 ---
+***
+### Project Overview
+***
 
-## Project & Datasets Overview
+This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 "compounds" or rural towns, grouped into 720 clusters. Each compound represents at least 1 pregnant woman in her second trimester. [This article was a helpful reference](http://bmjopen.bmj.com/content/3/8/e003476.short) for understanding the study design. [This is the Open Science Framework (OSF) home](https://osf.io/wvyn4/) of the data.
 
-This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 "compounds" or rural towns. Each compound represents at least 1 pregnant woman in her second trimester. [This article was a helpful reference](http://bmjopen.bmj.com/content/3/8/e003476.short)  for understanding the study design.
+***
+### Relevant Datasets Overview
+***
 
+##### Treatment Assignments (`washb-bangladesh-tr-public`)
+The 720 rows (each representing a cluster) are divied into a 8 clusters x 90 blocks format. The 8 clusters **within** a block are all proximal to each other and are seperated by a minimum of 1km. Sequential blocks are not necessarily proximal. The data is keyed on `clusterid`. Within each block, 6 clusters were designated as unique intervention arms and 2 were reserved for a double-sized control arm.
 
+##### Enrollment Characteristics (`washb-bangladesh-enrol-public`)
+The file includes 5,551 rows (each representing an enrolled compound), and maps to compound characteristics
 
+##### Adherence (`washb-bangladesh-uptake-public`)
+The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 should. Adherence was also measured via counts of lipid-based nutrient supplements (`lnsn`, `lnsp`) and those reported by the mother in the last week (`rlsn`, `rlnsp`). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or > 28 are implausible
+
+##### Diarrhea Measurements (`washb-bangladesh-diar-public`)
+This file includes 22,594 observations, measuring diarrheal status from children from the birth cohort and children living in the compound who were <36 months at enrollment time. Notably, `tchild` takes on the value `Target child` or `Sibling`, where `Sibling` refers to not only true siblings, but also age-eligible children from other families in the same compound. 
+
+Diarrhea was defined as >= 3 loose or watery stools in 24 hours or >= 1 stool with blood over the 7 days prior to measurement. 
+
+***
+### Setup
 ```{r}
-# Hey guys
+# Importing Libraries
+library(dplyr)
+library(DataExplorer)
+library(data.table)
+
+
+# Setting File Paths
+setwd("~/PH241/Final Project/Data")
+filepaths = c("washb-bangladesh-tr-public.csv",
+              "washb-bangladesh-enrol-public.csv",
+              "washb-bangladesh-uptake-public.csv",
+              "washb-bangladesh-diar-public.csv"
+              )
+
+compoundTreatment       = fread(filepaths[1], data.table=FALSE)
+compoundCharacteristics = fread(filepaths[2], data.table=FALSE)
+compoundAdherence       = fread(filepaths[3], data.table=FALSE)
+diarrheaMeasurment      = fread(filepaths[4], data.table=FALSE)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
