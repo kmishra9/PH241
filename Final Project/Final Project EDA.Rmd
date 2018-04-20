@@ -24,11 +24,13 @@ The file includes 14,906 rows which map to a unique (compound, date) measurement
 ##### Diarrhea Measurements (`washb-bangladesh-diar-public`)
 This file includes 22,594 observations, measuring diarrheal status from children from the birth cohort and children living in the compound who were <36 months at enrollment time. Notably, `tchild` takes on the value `Target child` or `Sibling`, where `Sibling` refers to not only true siblings, but also age-eligible children from other families in the same compound. 
 
-Diarrhea was defined as >= 3 loose or watery stools in 24 hours or >= 1 stool with blood over the 7 days prior to measurement. 
+Diarrhea was defined as >= 3 loose or watery stools in 24 hours or >= 1 stool with blood over the 7 days prior to measurement.
+
+Key: `dataid` + `childid` + `svy` (Compound ID + childID + survey round)
 
 ***
 ### Setup
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Importing Libraries
 library(dplyr)
 library(DataExplorer)
@@ -36,6 +38,7 @@ library(data.table)
 
 
 # Setting File Paths
+prefix = "~/PH241/Final Project/Data"
 setwd("~/PH241/Final Project/Data")
 filepaths = c("washb-bangladesh-tr-public.csv",
               "washb-bangladesh-enrol-public.csv",
@@ -48,7 +51,42 @@ compoundCharacteristics = fread(filepaths[2], data.table=FALSE)
 compoundAdherence       = fread(filepaths[3], data.table=FALSE)
 diarrheaMeasurment      = fread(filepaths[4], data.table=FALSE)
 ```
+***
+### Exploratory Data Analysis (EDA)
+```{r}
+compoundTreatment %>% head
+compoundCharacteristics %>% head
+compoundAdherence %>% head
+diarrheaMeasurement %>% head
 
+```
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
+# Using DataExplorer to generate reports on variables
+create_report(data=compoundTreatment,
+              output_file="compoundTreatment.report.html", 
+              output_dir=paste(prefix, "/Reports", sep="")
+              )
+create_report(data=compoundCharacteristics,
+              output_file="compoundCharacteristics.report.html", 
+              output_dir=paste(prefix, "/Reports", sep="")
+              )
+create_report(data=compoundAdherence,
+              output_file="compoundAdherence.report.html", 
+              output_dir=paste(prefix, "/Reports", sep="")
+              )
+create_report(data=diarrheaMeasurement,
+              output_file="diarrheaMeasurement.report.html", 
+              output_dir=paste(prefix, "/Reports", sep="")
+              )
+```
+
+In looking at these data reports, some questions that come up are:
+
+1. How do characteristics of the mothers (such as education level or height/weight) interact with or confound compound treatments on diarrheal incidence? 
+2. How does food security status interact with or confound compound treatments on diarrheal incidence?
+3. Which treatment(s) appear to be the most effective, after adjusting for confounders? 
+
+To proceed, let's clean up our data so we can answer these questions.
 
 
 
