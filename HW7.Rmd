@@ -1,0 +1,52 @@
+---
+title: "PH241 HW7"
+author: "Kunal Mishra"
+date: "3/2/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(epitools)
+```
+
+#### Part A
+```{r}
+matrix1 = matrix(c(59, 119, 
+                   136, 186), 
+                 ncol=2)
+colnames(matrix1) = c("Dead", "Alive")
+rownames(matrix1) = c("Low-Fat Diet", "Other Diet")
+pooled2x2 = as.table(matrix1)
+
+pooled2x2
+
+oddsratio(pooled2x2)
+```
+
+#### Part C
+```{r}
+matrix2 = matrix(c(17, 75, 28, 40, 10, 14, 4, 7, 
+                   22, 75, 36, 45, 37, 34, 24, 32), 
+                 ncol=2)
+colnames(matrix2) = c("Dead", "Alive")
+rownames(matrix2) = c("AL 0 Low-Fat Diet", "AL 0 Other Diet",
+                      "AL 1 Low-Fat Diet", "AL 1 Other Diet",
+                      "AL 2 Low-Fat Diet", "AL 2 Other Diet",
+                      "AL 3 Low-Fat Diet", "AL 3 Other Diet"
+                      )
+stratified2x2 = as.table(matrix2)
+
+oddsratio(stratified2x2[1:2,])
+oddsratio(stratified2x2[3:4,])
+oddsratio(stratified2x2[5:6,])
+oddsratio(stratified2x2[7:8,])
+```
+
+mantelhaen.test()
+#### Part E & G
+```{r}
+mantelhaen.test()
+```

@@ -1,0 +1,138 @@
+---
+title: "PH241 HW11"
+author: "Kunal Mishra"
+date: "4/12/2018"
+output: pdf_document
+---
+
+## Basic Setup and Minimal EDA
+```{r, message=FALSE}
+library(dplyr)
+library(DataExplorer)
+library(lmtest)
+library(dummies)
+
+data = read.csv(file="HW11.csv", header=TRUE)
+data %>% nrow
+data %>% head 
+```
+
+## Question 1A
+```{r}
+data.1A = 
+    data %>%
+    mutate(lowAlc = ifelse(alcgp < 2, 1, 0)) %>%
+    select(-(X))
+
+data.1A %>% head
+```
+Now that we've boiled our data down to a binary explanatory variable based on a threshold of 80g of alcohol per day, let's run logistic regression to examine whether there is an association. First, let's run it using just one explanatory variable -- lowAlc.
+```{r}
+fit1.A = glm(formula=casestatus~lowAlc, data=data.1A, family="binomial")
+summary(fit1.A)
+```
+
+Examining CIs of e^coefficients
+```{r}
+exp(confint(fit1.A))
+```
+
+Now, using all the variables available to us, let's use multiple logistic regression 
+```{r}
+fit2.A = glm(formula=casestatus~., data=data.1A, family="binomial")
+summary(fit2.A)
+```
+
+Examining CIs of e^coefficients
+```{r}
+exp(confint(fit2.A))
+```
+
+Now, lets run a likelihood ratio test to compare our resulting model from our first fit (casestatus = B0+B1*lowAlc) to the null, which assumes all Beta coefficients are 0 beyond the intercepts (casestatus = B0). We'll also examine our second fit (casestatus = B0+B1\*lowAlc+B2\*agegp\*tobgp) against the null. 
+```{r}
+lrtest(fit1.A)
+lrtest(fit2.A)
+```
+Interpreting the LR test, we see that both models are significantly different from the null, and because they have lower log likelihoods, they are significantly better predictors of casestatus than the null.
+
+## Question 1B
+
+In this subpart we'll need to do much of the same with slightly different data utilizing dummy variables for alcohol consumption as a categorical variable.
+
+```{r}
+data.1B = 
+    dummy.data.frame(data=data, names=c("alcgp")) %>%
+    select(-one_of("X", "alcgp0")) #Dropping alcgp0 as the reference group
+
+data.1B %>% head
+```
+
+Now, let's run logistic regression (univariate and multiple)
+```{r}
+fit1.B = glm(formula=casestatus~alcgp1+alcgp2+alcgp3, family="binomial", data=data.1B)
+fit2.B = glm(formula=casestatus~., family="binomial", data=data.1B)
+
+# Reporting Log Odds Ratios (Model fit)
+summary(fit1.B)
+# Reporting Odds Ratios (Coefficients)
+exp(coef(fit1.B))
+#Reporting Confidence Intervals of Odds Ratios
+exp(confint(fit1.B))
+# Reporting Log Odds Ratios (Model fit)
+summary(fit2.B)
+# Reporting Odds Ratios (Coefficients)
+exp(coef(fit2.B))
+#Reporting Confidence Intervals of Odds Ratios
+exp(confint(fit2.B))
+```
+
+Now, lets run a likelihood ratio test to compare our resulting model from our first fit (casestatus = B0+B1\*alcgp1+B2\*alcgp2+B3\*alcgp3) to the null, which assumes all Beta coefficients are 0 beyond the intercepts (casestatus = B0). We'll also examine our second fit (casestatus = B0+B1\*agegp+B2\*alcgp1+B3\*alcgp2+B4\*alcgp3+B5\*tobgp) against the null. 
+```{r}
+lrtest(fit1.B)
+lrtest(fit2.B)
+```
+Interpreting the LR test, we see that both models are significantly different from the null, and because they have lower log likelihoods, they are significantly better predictors of casestatus than the null.
+
+## Question 1C
+This data requires the least cleaning of any question so far -- we are using the given structure.
+```{r}
+data.1C = 
+    data %>% 
+    select(-X)
+
+data.1C %>% head
+```
+
+Now, let's run logistic regression (univariate and multiple)
+```{r}
+fit1.C = glm(formula=casestatus~alcgp, family="binomial", data=data.1C)
+fit2.C = glm(formula=casestatus~., family="binomial", data=data.1C)
+
+# Reporting Log Odds Ratios (Model fit)
+summary(fit1.C)
+# Reporting Odds Ratios (Coefficients)
+exp(coef(fit1.C))
+#Reporting Confidence Intervals of Odds Ratios
+exp(confint(fit1.C))
+# Reporting Log Odds Ratios (Model fit)
+summary(fit2.C)
+# Reporting Odds Ratios (Coefficients)
+exp(coef(fit2.C))
+#Reporting Confidence Intervals of Odds Ratios
+exp(confint(fit2.C))
+```
+
+Now, lets run a likelihood ratio test to compare our resulting model from our first fit (casestatus = B0+B1\*alcgp) to the null, which assumes all Beta coefficients are 0 beyond the intercepts (casestatus = B0). We'll also examine our second fit (casestatus = B0+B1\*agegp+B2\*alcgp+B3\*tobgp) against the null. 
+```{r}
+lrtest(fit1.C)
+lrtest(fit2.C)
+```
+Interpreting the LR test, we see that both models are significantly different from the null, and because they have lower log likelihoods, they are significantly better predictors of casestatus than the null.
+
+## Question 1D
+
+Now, lets run a likelihood ratio test to compare our models from part B and C 
+```{r}
+lrtest(fit1.B, fit1.C)
+lrtest(fit2.B, fit2.C)
+```

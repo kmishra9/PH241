@@ -1,0 +1,39 @@
+---
+title: "PH241 HW4"
+author: "Kunal Mishra"
+date: "2/6/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##### Question 1
+Generating and displaying table
+```{r}
+matrix1 = matrix(c(61, 81, 343, 660), ncol=2)
+colnames(matrix1) = c("Case", "Control")
+rownames(matrix1) = c("Herbicides", "No Herbicides")
+table1 = as.table(matrix1)
+
+table1
+```
+Running Chi-Squared on our two-way table
+```{r}
+chisq.test(table1)
+```
+
+###### Ignore this -- I looked into it but Prof Nick said it'd be okay to just submit our code and output in lieu of this question
+
+Running the cc and cs stata commands in R to compare to our Chi-Squared result.U nfortunately, EpiStats, which implements the cc and cs stata commands for us, requires our data to look like this sample tiramisu data so we'll need to make some changes.
+```{r}
+#install.packages("EpiStats")
+#library(EpiStats)
+```
+Data should resemble the tiramisu dataset, per the EpiStats vignette (https://cran.r-project.org/web/packages/EpiStats/vignettes/EpiStats.pdf) and the Stata explanation on cc and cs (https://www.stata.com/features/tables-for-epidemiologists/)
+```{r}
+#data(Tiramisu)
+#head(Tiramisu)
+#cc(x=as.data.frame(table1), cases="Case", exposure="Herbicides", exact=FALSE)
+```

@@ -1,0 +1,15 @@
+---
+title: "PH241 Final Project EDA"
+output: html_notebook
+---
+
+## Project & Datasets Overview
+
+This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 "compounds" or rural towns. Each compound represents at least 1 pregnant woman in her second trimester. [This article was a helpful reference](http://bmjopen.bmj.com/content/3/8/e003476.short)  for understanding the study design.
+
+
+
+```{r}
+# Hey guys
+```
+

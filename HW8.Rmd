@@ -1,0 +1,50 @@
+---
+title: "PH241 HW8"
+author: "Kunal Mishra"
+date: "3/9/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Good resource: https://rcompanion.org/rcompanion/b_10.html
+# Good resource: http://courses.umass.edu/biep640w/pdf/4.%20%20Categorical%20Data%20Analysis%202014.pdf
+```
+
+```{r}
+library(vcd)
+
+pooledTable = array(
+    c(38+12, 102+136, 12+9, 141+383),
+    dim=c(2,2),
+    dimnames=list( c("BFE - Yes", "No"),
+                   c("TBCase", "TBControl")
+    )
+)
+pooledTable
+
+oddsratio(pooledTable, log = FALSE)
+
+stratifiedTable = array( 
+    c(c(38, 102, 12, 141),
+      c(12, 136, 9, 383)), 
+    dim=c(2,2,2),
+    dimnames=list( c("BFE - Yes", "No"),
+                   c("TBCase", "TBControl"),
+                   c("< 1000 Pesos", ">= 1000 Pesos")
+    )
+)
+stratifiedTable
+
+oddsratio(stratifiedTable, log = FALSE)
+
+woolf_test(stratifiedTable)
+
+library(DescTools)
+BreslowDayTest(stratifiedTable)
+
+mantelhaen.test(stratifiedTable)
+```

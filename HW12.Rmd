@@ -1,0 +1,91 @@
+---
+title: "PH241 HW12"
+author: "Kunal Mishra"
+date: "4/14/2018"
+output: pdf_document
+---
+
+## Basic Setup and Minimal EDA
+```{r, message=FALSE}
+library(dplyr)
+library(dummies)
+
+rawdata = read.csv(file="HW12.csv", header=TRUE) %>% select(-X)
+colnames(rawdata) = c("Activity_Level", "Low_Fat_Diet", "All_Cause_Mortality")
+
+# Dropping one of the columns to use as a reference variable
+data = dummy.data.frame(data=rawdata, names=c("Activity_Level")) %>% select(-Activity_Level0)
+
+data %>% nrow
+data %>% head 
+```
+
+## Fitting 3 Logistic Regression Models 
+
+- Model 1: B0 + B1\*Diet
+- Model 2: B0 + B1\*Diet + B2\*act1 + B3\*act2 + B4\*act3
+- Model 3: B0 + B1\*Diet + B2\*act1 + B3\*act2 + B4\*act3 + B5\*Diet\*act1 + B6\*Diet\*act2 + B7\*Diet\*act3
+```{r}
+fit1 = glm(formula=All_Cause_Mortality~Low_Fat_Diet, 
+           family="binomial", 
+           data=data)
+
+fit2 = glm(formula=All_Cause_Mortality~Low_Fat_Diet + Activity_Level1 + Activity_Level2 + Activity_Level3, 
+           family="binomial", 
+           data=data)
+
+fit3 = glm(formula=All_Cause_Mortality~Low_Fat_Diet + Activity_Level1 + Activity_Level2 + Activity_Level3 + Low_Fat_Diet*Activity_Level1 + Low_Fat_Diet*Activity_Level2 + Low_Fat_Diet*Activity_Level3,
+           family="binomial",
+           data=data)
+
+fit.report = function(fit) {
+    # Reporting Log Odds Ratios (Model fit)
+    fit %>% summary %>% print
+    writeLines("\n\nORs")
+    # Reporting Odds Ratios (Coefficients)
+    fit %>% coef %>% exp %>% print
+    writeLines("\n\nConfidence Intervals of ORs")
+    #Reporting Confidence Intervals of Odds Ratios
+    fit %>% confint %>% exp %>% print
+    writeLines("\n\n")
+}
+
+fit.report(fit1)
+fit.report(fit2)
+fit.report(fit3)
+```
+
+## Question 1C
+```{r}
+activityLevel0 = rawdata %>% filter(Activity_Level==0)
+activityLevel1 = rawdata %>% filter(Activity_Level==1)
+activityLevel2 = rawdata %>% filter(Activity_Level==2)
+activityLevel3 = rawdata %>% filter(Activity_Level==3)
+
+fit.activityLevel0 = glm(formula=All_Cause_Mortality~Low_Fat_Diet, family="binomial", data=activityLevel0)
+fit.activityLevel1 = glm(formula=All_Cause_Mortality~Low_Fat_Diet, family="binomial", data=activityLevel1)
+fit.activityLevel2 = glm(formula=All_Cause_Mortality~Low_Fat_Diet, family="binomial", data=activityLevel2)
+fit.activityLevel3 = glm(formula=All_Cause_Mortality~Low_Fat_Diet, family="binomial", data=activityLevel3)
+
+fit.report(fit.activityLevel0)
+fit.report(fit.activityLevel1)
+fit.report(fit.activityLevel2)
+fit.report(fit.activityLevel3)
+```
+
+## Question 1F
+```{r}
+stratifiedData = array(
+    c(c(17, 75, 22, 75),
+      c(28, 40, 36, 45),
+      c(10, 14, 37, 34),
+      c(4, 7, 24, 32)),
+    dim=c(2,2,4),
+    dimnames=list( c("Low-Fat Diet", "Other Diet"),
+                   c("Dead", "Alive"),
+                   c("AL0", "AL1", "AL2", "Al3")
+    )
+)
+mantelhaen.test(stratifiedData)
+```
+
