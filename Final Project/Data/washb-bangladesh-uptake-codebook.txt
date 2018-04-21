@@ -11,7 +11,7 @@ Contains data from washb-bangladesh-uptake.dta
   obs:        14,906                          Bangladesh uptake analysis dataset (compound-svy
                                                 obs), created by 6-bangladesh-d
  vars:            18                          9 Jan 2018 17:50
- size:       581,334                          
+ size:       581,334
 ----------------------------------------------------------------------------------------------------
               storage   display    value
 variable name   type    format     label      variable label

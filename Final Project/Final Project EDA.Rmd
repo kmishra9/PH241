@@ -4,13 +4,11 @@ output: html_notebook
 ---
 ***
 ### Project Overview
-***
 
 This project will be an analysis of the WASH Benefits Bangladesh trial looking at 5,551 "compounds" or rural towns, grouped into 720 clusters. Each compound represents at least 1 pregnant woman in her second trimester. [This article was a helpful reference](http://bmjopen.bmj.com/content/3/8/e003476.short) for understanding the study design. [This is the Open Science Framework (OSF) home](https://osf.io/wvyn4/) of the data.
 
 ***
 ### Relevant Datasets Overview
-***
 
 ##### Treatment Assignments (`washb-bangladesh-tr-public`)
 The 720 rows (each representing a cluster) are divied into a 8 clusters x 90 blocks format. The 8 clusters **within** a block are all proximal to each other and are seperated by a minimum of 1km. Sequential blocks are not necessarily proximal. The data is keyed on `clusterid`. Within each block, 6 clusters were designated as unique intervention arms and 2 were reserved for a double-sized control arm.
@@ -19,7 +17,7 @@ The 720 rows (each representing a cluster) are divied into a 8 clusters x 90 blo
 The file includes 5,551 rows (each representing an enrolled compound), and maps to compound characteristics
 
 ##### Adherence (`washb-bangladesh-uptake-public`)
-The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 should. Adherence was also measured via counts of lipid-based nutrient supplements (`lnsn`, `lnsp`) and those reported by the mother in the last week (`rlsn`, `rlnsp`). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or > 28 are implausible
+The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 of the original 5551 did for all 3 years. Adherence was also measured via counts of lipid-based nutrient supplements (`lnsn`, `lnsp`) and those reported by the mother in the last week (`rlsn`, `rlnsp`). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or > 28 are implausible.
 
 ##### Diarrhea Measurements (`washb-bangladesh-diar-public`)
 This file includes 22,594 observations, measuring diarrheal status from children from the birth cohort and children living in the compound who were <36 months at enrollment time. Notably, `tchild` takes on the value `Target child` or `Sibling`, where `Sibling` refers to not only true siblings, but also age-eligible children from other families in the same compound. 
@@ -49,7 +47,7 @@ filepaths = c("washb-bangladesh-tr-public.csv",
 compoundTreatment       = fread(filepaths[1], data.table=FALSE)
 compoundCharacteristics = fread(filepaths[2], data.table=FALSE)
 compoundAdherence       = fread(filepaths[3], data.table=FALSE)
-diarrheaMeasurment      = fread(filepaths[4], data.table=FALSE)
+diarrheaMeasurement      = fread(filepaths[4], data.table=FALSE)
 ```
 ***
 ### Exploratory Data Analysis (EDA)
@@ -84,9 +82,50 @@ In looking at these data reports, some questions that come up are:
 
 1. How do characteristics of the mothers (such as education level or height/weight) interact with or confound compound treatments on diarrheal incidence? 
 2. How does food security status interact with or confound compound treatments on diarrheal incidence?
-3. Which treatment(s) appear to be the most effective, after adjusting for confounders? 
+3. How did adherence for compounds affect diarrheal incidence?
+    - This may need to examine LNS measures seperately because there are so many pieces of data missing
+4. Which treatment(s) appear to be the most effective, after adjusting for confounders and adherence?
 
-To proceed, let's clean up our data so we can answer these questions.
+To proceed, we'll need cleaner, simpler data so we can answer these questions. 
+
+Let's start by scrubbing our diarrheal measurements (which contains our primary outcome) of columns irrelevant to our analysis
+```{r}
+
+diarrheaMeasurement.limited = 
+    diarrheaMeasurement %>%
+    select(dataid, childid, clusterid, block, svy, sex, agedays, diar7d)
+
+diarrheaMeasurement.limited %>% head
+```
+Next up, let's simplify our adherence dataset. We are also missing a ton of data for rlnsp/lnsp (nearly 90% of rows), which is something to consider later.  
+```{r}
+compoundAdherence.limited = 
+    compoundAdherence %>% 
+    select(-c(svyweek, svyyear, rlnsn, lnsn))
+
+compoundAdherence.limited %>% head
+```
+Finally, let's clean up our compound characteristics dataset. 
+```{r}
+compoundCharacteristics.limited = 
+    compoundCharacteristics %>%
+    select(dataid, clusterid, block, Nhh, Nlt18, Ncomp, momage, momheight, momeduy, dadeduy,
+           dadagri, landacre, hfias, hfiacat, tubewell, watmin, storewat, treatwat, latown, 
+           latslab, latseal, latfeces, potty, humfeces, humfecesch, hwsw, hwss, hwsws, roof,
+           walls, floor, cement, elec, asset_radio, asset_tvbw, asset_tvcol, asset_refrig,
+           asset_bike, asset_moto, asset_sewmach, asset_phone, asset_tv, asset_wardrobe,
+           asset_table, asset_chair, asset_clock, asset_khat, asset_chouki, asset_mobile, 
+           n_asset_mobile
+           )
+
+compoundCharacteristics.limited %>% head
+```
+Given the variety of information about wealth-based or consumption-based assets, it might be possible to estimate relative wealth from this data and use it for that "interesting" analyses we mentioned earlier (among control clusters, how much variation in diarrheal incidence, which could be attributed to different status quo WASH methods, is actually confounded by wealth?). 
+
+Now that we've limited our raw datasets to only the variables we're interested in, lets save them and merge them for later analysis. 
+```{r}
+
+```
 
 
 
