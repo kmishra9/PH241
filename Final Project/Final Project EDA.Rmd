@@ -125,7 +125,8 @@ Given the variety of information about wealth-based or consumption-based assets,
 Now that we've limited our raw datasets to only the variables we're interested in, lets save them and merge them for later analysis. 
 ```{r warning=FALSE}
 # Merging data together
-mergedData = compoundTreatment %>% inner_join(compoundCharacteristics.limited) %>% inner_join(compoundAdherence.limited) %>% inner_join(diarrheaMeasurement.limited)
+mergedData = compoundTreatment %>% inner_join(diarrheaMeasurement.limited) %>% 
+inner_join(compoundAdherence.limited) %>% inner_join(compoundCharacteristics.limited, by=c("block", "clusterid", "dataid"))
 
 setwd(paste(prefix, "/Cleaned", sep=""))
 
@@ -135,17 +136,4 @@ write.csv(compoundCharacteristics.limited, "washb-bangladesh-compoundCharacteris
 write.csv(compoundAdherence.limited, "washb-bangladesh-compoundAdherence-limited-public.csv")
 write.csv(mergedData, "washb-bangladesh-merged-public.csv")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
 
