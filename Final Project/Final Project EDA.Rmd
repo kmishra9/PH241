@@ -37,7 +37,7 @@ library(data.table)
 
 # Setting File Paths
 prefix = "~/PH241/Final Project/Data"
-setwd("~/PH241/Final Project/Data")
+setwd(prefix)
 filepaths = c("washb-bangladesh-tr-public.csv",
               "washb-bangladesh-enrol-public.csv",
               "washb-bangladesh-uptake-public.csv",
@@ -123,8 +123,17 @@ compoundCharacteristics.limited %>% head
 Given the variety of information about wealth-based or consumption-based assets, it might be possible to estimate relative wealth from this data and use it for that "interesting" analyses we mentioned earlier (among control clusters, how much variation in diarrheal incidence, which could be attributed to different status quo WASH methods, is actually confounded by wealth?). 
 
 Now that we've limited our raw datasets to only the variables we're interested in, lets save them and merge them for later analysis. 
-```{r}
+```{r warning=FALSE}
+# Merging data together
+mergedData = compoundTreatment %>% inner_join(compoundCharacteristics.limited) %>% inner_join(compoundAdherence.limited) %>% inner_join(diarrheaMeasurement.limited)
 
+setwd(paste(prefix, "/Cleaned", sep=""))
+
+#Outputting datasets
+write.csv(diarrheaMeasurement.limited, "washb-bangladesh-diarrheaMeasurement-limited-public.csv")
+write.csv(compoundCharacteristics.limited, "washb-bangladesh-compoundCharacteristics-limited-public.csv")
+write.csv(compoundAdherence.limited, "washb-bangladesh-compoundAdherence-limited-public.csv")
+write.csv(mergedData, "washb-bangladesh-merged-public.csv")
 ```
 
 
