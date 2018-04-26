@@ -1,0 +1,38 @@
+---
+title: "PH241 Final Project - Model Fits"
+output: html_notebook
+---
+
+***
+### Setup
+```{r, warning=FALSE, message=FALSE}
+# Importing Libraries
+library(dplyr)
+library(data.table)
+
+# Setting File Paths
+prefix = "~/PH241/Final Project/Data/Cleaned/"
+setwd(prefix)
+filepaths = c("washb-bangladesh-merged-public.csv")
+
+mergedData = fread(filepaths[1], data.table=FALSE) %>% select(-V1)
+```
+
+Let's begin with an overview of the data we'll be looking at. Our merged dataset includes one binary outcome variable (diar7d) and a variety of explanatory variables. Each row represents a measurement of a child's diarrheal status over the last 7 days, where 0 indicates no diarrhea and 1 indicates some report of diarrhea, where diarrhea was defined as >= 3 loose or watery stools in 24 hours or >= 1 stool with blood over the 7 days prior to measurement.
+
+```{r}
+mergedData %>% head
+```
+
+Now, let's fit some models.
+
+### Model 1 - Control Arm
+In examining the control arm, we want to know whether "better" sanitary and hygienic conditions among the nonrandomized controls contributes to decreased diarrheal disease. If there is a difference, is that difference due to confounding? 
+
+```{r}
+controlData = mergedData %>% filter(tr=="Control")
+controlData %>% nrow
+controlData %>% head
+```
+
+
