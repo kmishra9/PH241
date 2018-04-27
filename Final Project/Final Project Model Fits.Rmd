@@ -16,6 +16,18 @@ setwd(prefix)
 filepaths = c("washb-bangladesh-merged-public.csv")
 
 mergedData = fread(filepaths[1], data.table=FALSE) %>% select(-V1)
+
+fit.report = function(fit) {
+    # Reporting Log Odds Ratios (Model fit)
+    fit %>% summary %>% print
+    writeLines("\n\nORs")
+    # Reporting Odds Ratios (Coefficients)
+    fit %>% coef %>% exp %>% print
+    writeLines("\n\nConfidence Intervals of ORs")
+    #Reporting Confidence Intervals of Odds Ratios
+    fit %>% confint %>% exp %>% print
+    writeLines("\n\n")
+}
 ```
 
 Let's begin with an overview of the data we'll be looking at. Our merged dataset includes one binary outcome variable (diar7d) and a variety of explanatory variables. Each row represents a measurement of a child's diarrheal status over the last 7 days, where 0 indicates no diarrhea and 1 indicates some report of diarrhea, where diarrhea was defined as >= 3 loose or watery stools in 24 hours or >= 1 stool with blood over the 7 days prior to measurement.
@@ -26,13 +38,45 @@ mergedData %>% head
 
 Now, let's fit some models.
 
-### Model 1 - Control Arm
-In examining the control arm, we want to know whether "better" sanitary and hygienic conditions among the nonrandomized controls contributes to decreased diarrheal disease. If there is a difference, is that difference due to confounding? 
+### Model 1 - Handwashing Access
 
 ```{r}
 controlData = mergedData %>% filter(tr=="Control")
 controlData %>% nrow
 controlData %>% head
 ```
+Let's first look at whether access to handwashing stations with soap+water in the control arm was associated with diarrheal incidence.
+```{r}
+fit1 = glm(formula=diar7d~hwsws,
+           family="binomial",
+           data=controlData)
+
+fit.report(fit1)
+```
 
 
+
+### Model 2 - Bathroom santiation
+In examining the control arm, we want to know whether "better" sanitary and hygienic conditions among the controls contributes to decreased diarrheal disease. If there is a difference, is that difference due to confounding? Let's broaden the scope of our data to examine variables relevant to bathroom conditions, including but more expansive than just handwashing. 
+```{r}
+controlData.restricted = controlData %>%
+    select(diar7d, latown, latslab, latseal, latfeces, potty,
+           humfeces, humfecesch, hwsw, hwsws
+           )
+
+controlData.restricted %>% head
+```
+Finally, let's fit a logistic regression model to analyze whether these variables associate with incidence of diarrhea in the control arm
+```{r}
+fit2 = glm(formula=diar7d~., 
+           family="binomial", 
+           data=controlData.restricted)
+
+fit2 %>% fit.report
+```
+Based on the models our regression generated, we so far have some fairly intuitive results. Though several of our regression coefficients were not statistically significant, they definitely at least trended in the right direction. In particular, two variables that we would expect to associate positively with a child's diarrheal incidence are the feces detection in the compound and latrine (`humfeces` and `latfeces`). In both cases, all else being equal, observing feces was positively associated with diarrheal incidence (though latfeces' coefficient was not statistically significant). On the flip side, having handwashing stations with water (`hwsw`) or handwashing stations with water+soap (`hwsws`) had a protective effect, as one would expect. Having the latter, with soap included also had a slightly stronger protective effect, which is what we would expect too. Finally, having a latrine with a functional water seal (`latseal`) and a potty for children (`potty`) also had protective -- though not statistically significant -- effects, as we would expect. Surprisingly, detection of feces in children areas (`humfecesch`) had a protective effect in this regression, but the coefficient was not statistically significant *and* there were very few observations of this, which makes random error a likely culprit for our results. Alternatively, if this were a significant result, children in households with constant exposure to feces may have developed immune resistance to diarrheal diseases.
+
+#### Adjusting for Confounding
+```{r}
+# Do stuff here
+```

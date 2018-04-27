@@ -11,7 +11,7 @@ Contains data from washb-bangladesh-diar.dta
   obs:        22,594                          Bangladesh diarrhea dataset, created by
                                                 3-bangladesh-dm-diar.do
  vars:            28                          17 Aug 2016 14:37
- size:     1,197,482                          
+ size:     1,197,482
 ----------------------------------------------------------------------------------------------------
               storage   display    value
 variable name   type    format     label      variable label

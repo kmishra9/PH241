@@ -41,13 +41,15 @@ setwd(prefix)
 filepaths = c("washb-bangladesh-tr-public.csv",
               "washb-bangladesh-enrol-public.csv",
               "washb-bangladesh-uptake-public.csv",
-              "washb-bangladesh-diar-public.csv"
+              "washb-bangladesh-diar-public.csv",
+              "washb-bangladesh-anthro-public.csv"
               )
 
-compoundTreatment       = fread(filepaths[1], data.table=FALSE)
-compoundCharacteristics = fread(filepaths[2], data.table=FALSE)
-compoundAdherence       = fread(filepaths[3], data.table=FALSE)
-diarrheaMeasurement      = fread(filepaths[4], data.table=FALSE)
+compoundTreatment           = fread(filepaths[1], data.table=FALSE)
+compoundCharacteristics     = fread(filepaths[2], data.table=FALSE)
+compoundAdherence           = fread(filepaths[3], data.table=FALSE)
+diarrheaMeasurement         = fread(filepaths[4], data.table=FALSE)
+athropometricMeasurements   = fread(filepaths[5], data.table=FALSE)
 ```
 ***
 ### Exploratory Data Analysis (EDA)
@@ -56,7 +58,7 @@ compoundTreatment %>% head
 compoundCharacteristics %>% head
 compoundAdherence %>% head
 diarrheaMeasurement %>% head
-
+athropometricMeasurements %>% head 
 ```
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 # Using DataExplorer to generate reports on variables
@@ -90,14 +92,19 @@ To proceed, we'll need cleaner, simpler data so we can answer these questions.
 
 Let's start by scrubbing our diarrheal measurements (which contains our primary outcome) of columns irrelevant to our analysis
 ```{r}
+diarrheaMeasurement$allCauseDiarrhea = rowSums(diarrheaMeasurement[,c("d3plus2d", "d3plus7d", "dloose2d", "dloose7d", "dblood2d", "dblood7d", "diar2d", "diar7d")]) > 0
+
+diarrheaMeasurement = diarrheaMeasurement %>% na.omit(allCauseDiarrhea)
+
+diarrheaMeasurement$allCauseDiarrhea = as.integer(as.logical(diarrheaMeasurement$allCauseDiarrhea))
 
 diarrheaMeasurement.limited = 
     diarrheaMeasurement %>%
-    select(dataid, childid, clusterid, block, svy, sex, agedays, diar7d)
+    select(dataid, childid, clusterid, block, svy, sex, agedays, allCauseDiarrhea)
 
 diarrheaMeasurement.limited %>% head
 ```
-Next up, let's simplify our adherence dataset. We are also missing a ton of data for rlnsp/lnsp (nearly 90% of rows), which is something to consider later.  
+Next up, let's simplify our adherence dataset. We are also missing a ton of data for rlnsp/lnsp (nearly 90% of rows), which is something to consider later. This may be because these were only relevant to the nutrition arm.
 ```{r}
 compoundAdherence.limited = 
     compoundAdherence %>% 
@@ -105,6 +112,17 @@ compoundAdherence.limited =
 
 compoundAdherence.limited %>% head
 ```
+Let's simplify the anthropometric dataset to use a binary variable for stunting.
+```{r}
+"gen wsbinary = 1 if lazminus2 == 1 | wazminus2 == 1
+replace wsbinary = 0 if lazminus2 == 0 & wazminus2 == 0
+gen wscategorical = lazminus2 + wazminus2"
+
+
+```
+
+
+
 Finally, let's clean up our compound characteristics dataset. 
 ```{r}
 compoundCharacteristics.limited = 
@@ -120,9 +138,11 @@ compoundCharacteristics.limited =
 
 compoundCharacteristics.limited %>% head
 ```
+
+
 Given the variety of information about wealth-based or consumption-based assets, it might be possible to estimate relative wealth from this data and use it for that "interesting" analyses we mentioned earlier (among control clusters, how much variation in diarrheal incidence, which could be attributed to different status quo WASH methods, is actually confounded by wealth?). 
 
-Now that we've limited our raw datasets to only the variables we're interested in, lets save them and merge them for later analysis. 
+Now that we've limited our raw datasets to only the variables we're interested in, lets save them and merge them for later analysis.
 ```{r warning=FALSE}
 # Merging data together
 mergedData = diarrheaMeasurement.limited %>% 
