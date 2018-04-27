@@ -49,7 +49,7 @@ compoundTreatment           = fread(filepaths[1], data.table=FALSE)
 compoundCharacteristics     = fread(filepaths[2], data.table=FALSE)
 compoundAdherence           = fread(filepaths[3], data.table=FALSE)
 diarrheaMeasurement         = fread(filepaths[4], data.table=FALSE)
-athropometricMeasurements   = fread(filepaths[5], data.table=FALSE)
+anthropometricMeasurements  = fread(filepaths[5], data.table=FALSE)
 ```
 ***
 ### Exploratory Data Analysis (EDA)
@@ -58,7 +58,7 @@ compoundTreatment %>% head
 compoundCharacteristics %>% head
 compoundAdherence %>% head
 diarrheaMeasurement %>% head
-athropometricMeasurements %>% head 
+anthropometricMeasurements %>% head 
 ```
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 # Using DataExplorer to generate reports on variables
@@ -76,6 +76,10 @@ create_report(data=compoundAdherence,
               )
 create_report(data=diarrheaMeasurement,
               output_file="diarrheaMeasurement.report.html", 
+              output_dir=paste(prefix, "/Reports", sep="")
+              )
+create_report(data=anthropometricMeasurements,
+              output_file="anthropometricMeasurements.report.html",
               output_dir=paste(prefix, "/Reports", sep="")
               )
 ```
@@ -112,13 +116,19 @@ compoundAdherence.limited =
 
 compoundAdherence.limited %>% head
 ```
-Let's simplify the anthropometric dataset to use a binary variable for stunting.
+Let's simplify the anthropometric dataset to use binary and ordinal variables for stunting.
 ```{r}
-"gen wsbinary = 1 if lazminus2 == 1 | wazminus2 == 1
-replace wsbinary = 0 if lazminus2 == 0 & wazminus2 == 0
-gen wscategorical = lazminus2 + wazminus2"
+anthropometricMeasurements$wsbinary = ifelse(anthropometricMeasurements$lazminus2==1 | 
+                                             anthropometricMeasurements$wazminus2==1 | 
+                                             anthropometricMeasurements$lazminus3==1 | 
+                                             anthropometricMeasurements$wazminus3==1, 
+                                             1, 0)
 
+anthropometricMeasurements$wscategorical = anthropometricMeasurements$lazminus2 + anthropometricMeasurements$wazminus2 + 2*(anthropometricMeasurements$lazminus3 + anthropometricMeasurements$wazminus3)
 
+anthropometricMeasurements.limited = anthropometricMeasurements %>% select(dataid, childid, clusterid, block, svy, wsbinary, wscategorical)
+
+anthropometricMeasurements.limited %>% head
 ```
 
 
@@ -146,8 +156,11 @@ Now that we've limited our raw datasets to only the variables we're interested i
 ```{r warning=FALSE}
 # Merging data together
 mergedData = diarrheaMeasurement.limited %>% 
-    inner_join(compoundTreatment, by=c("clusterid", "block")) %>%
-    inner_join(compoundCharacteristics.limited, by=c("dataid", "clusterid", "block"))
+    left_join(compoundTreatment) %>%
+    left_join(compoundCharacteristics.limited) %>%
+    left_join(anthropometricMeasurements.limited)
+
+mergedData %>% nrow
 
 setwd(paste(prefix, "/Cleaned", sep=""))
 
