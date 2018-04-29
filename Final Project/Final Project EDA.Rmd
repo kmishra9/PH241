@@ -114,6 +114,8 @@ compoundAdherence.limited =
     compoundAdherence %>% 
     select(-c(svyweek, svyyear, rlnsn, lnsn))
 
+compoundAdherence.limited$hwcat = rowSums(compoundAdherence.limited[,c("hwsw", "hwss")]) 
+
 compoundAdherence.limited %>% head
 ```
 Let's simplify the anthropometric dataset to use binary and ordinal variables for stunting.
@@ -146,6 +148,8 @@ compoundCharacteristics.limited =
            n_asset_mobile
            )
 
+compoundCharacteristics.limited$hwcat = rowSums(compoundCharacteristics.limited[,c("hwsw", "hwss")]) 
+
 compoundCharacteristics.limited %>% head
 ```
 
@@ -168,6 +172,7 @@ setwd(paste(prefix, "/Cleaned", sep=""))
 write.csv(diarrheaMeasurement.limited, "washb-bangladesh-diarrheaMeasurement-limited-public.csv")
 write.csv(compoundCharacteristics.limited, "washb-bangladesh-compoundCharacteristics-limited-public.csv")
 write.csv(compoundAdherence.limited, "washb-bangladesh-compoundAdherence-limited-public.csv")
+write.csv(anthropometricMeasurements.limited, "washb-bangladesh-anthropometricMeasurements-limited-public.csv")
 write.csv(mergedData, "washb-bangladesh-merged-public.csv")
 ```
 

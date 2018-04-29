@@ -1,0 +1,1034 @@
+{
+    "BETS::BETS.addin_en" : {
+        "binding" : "BETS.addin_en",
+        "description" : "An interface `for` time series search (in english)",
+        "interactive" : true,
+        "name" : "BETS search - English",
+        "package" : "BETS",
+        "title" : ""
+    },
+    "BETS::BETS.addin_pt" : {
+        "binding" : "BETS.addin_pt",
+        "description" : "An interface `for` time series search (in portuguese)",
+        "interactive" : true,
+        "name" : "BETS search - Português",
+        "package" : "BETS",
+        "title" : ""
+    },
+    "CRANsearcher::CRANsearcher" : {
+        "binding" : "CRANsearcher",
+        "description" : "Search packages in CRAN database based on keywords",
+        "interactive" : true,
+        "name" : "CRANsearcher",
+        "package" : "CRANsearcher",
+        "title" : ""
+    },
+    "Cite::cite" : {
+        "binding" : "cite",
+        "description" : "Helps insert bibtex citation in Rmd documents",
+        "interactive" : true,
+        "name" : "Cite",
+        "package" : "Cite",
+        "title" : ""
+    },
+    "EventStudy::EventStudyAddin" : {
+        "binding" : "EventStudyAddin",
+        "description" : "This addin is designed to perform an Event Study from the RStudio R IDE.",
+        "interactive" : true,
+        "name" : "Event Study",
+        "package" : "EventStudy",
+        "title" : ""
+    },
+    "Luminescence::.installDevelopmentVersion" : {
+        "binding" : ".installDevelopmentVersion",
+        "description" : "Install the developement version of the R package 'Luminescence'",
+        "interactive" : false,
+        "name" : "Install package development version",
+        "package" : "Luminescence",
+        "title" : ""
+    },
+    "Luminescence::.listTODO" : {
+        "binding" : ".listTODO",
+        "description" : "List TODOs in the source code",
+        "interactive" : false,
+        "name" : "Search for TODOs",
+        "package" : "Luminescence",
+        "title" : ""
+    },
+    "QRAGadget::QRAGadget" : {
+        "binding" : "QRAGadget",
+        "description" : "A Shiny Gadget For Interactive QRA Visualizations",
+        "interactive" : true,
+        "name" : "QRA Gadget",
+        "package" : "QRAGadget",
+        "title" : ""
+    },
+    "RLumShiny::RLumShinyAddin" : {
+        "binding" : "RLumShinyAddin",
+        "description" : "RLumShiny dashboard",
+        "interactive" : true,
+        "name" : "RLumShiny dashboard",
+        "package" : "RLumShiny",
+        "title" : ""
+    },
+    "Tmisc::insertEqual" : {
+        "binding" : "insertEqual",
+        "description" : "Inserts ` = ` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert =",
+        "package" : "Tmisc",
+        "title" : ""
+    },
+    "Tmisc::insertInAddin" : {
+        "binding" : "insertInAddin",
+        "description" : "Inserts `%in%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %in%",
+        "package" : "Tmisc",
+        "title" : ""
+    },
+    "abjutils::escape_unicode" : {
+        "binding" : "escape_unicode",
+        "description" : "Escapes all accented characters from a document.",
+        "interactive" : false,
+        "name" : "Escape Unicode",
+        "package" : "abjutils",
+        "title" : ""
+    },
+    "addinslist::addinslistAddin" : {
+        "binding" : "addinslistAddin",
+        "description" : "Discover and install useful RStudio addins",
+        "interactive" : true,
+        "name" : "Browse RStudio addins",
+        "package" : "addinslist",
+        "title" : ""
+    },
+    "blogdown::new_post_addin" : {
+        "binding" : "new_post_addin",
+        "description" : "Create a new post with blogdown::new_post().",
+        "interactive" : true,
+        "name" : "New Post",
+        "package" : "blogdown",
+        "title" : ""
+    },
+    "blogdown::serve_site" : {
+        "binding" : "serve_site",
+        "description" : "Run blogdown::serve_site() to live preview a website locally.",
+        "interactive" : true,
+        "name" : "Serve Site",
+        "package" : "blogdown",
+        "title" : ""
+    },
+    "blogdown::update_meta_addin" : {
+        "binding" : "update_meta_addin",
+        "description" : "Update the title, author, date, categories, and tags of the current blog post.",
+        "interactive" : true,
+        "name" : "Update Metadata",
+        "package" : "blogdown",
+        "title" : ""
+    },
+    "bookdown::mathquill" : {
+        "binding" : "mathquill",
+        "description" : "Input math expressions via the MathQuill library.",
+        "interactive" : true,
+        "name" : "Input LaTeX Math",
+        "package" : "bookdown",
+        "title" : ""
+    },
+    "bookdown::serve_book" : {
+        "binding" : "serve_book",
+        "description" : "Run bookdown::serve_book() to live preview a book.",
+        "interactive" : true,
+        "name" : "Preview Book",
+        "package" : "bookdown",
+        "title" : ""
+    },
+    "citr::insert_citation" : {
+        "binding" : "insert_citation",
+        "description" : "Inserts Markdown citations",
+        "interactive" : true,
+        "name" : "Insert citations",
+        "package" : "citr",
+        "title" : ""
+    },
+    "civis::publish_addin" : {
+        "binding" : "publish_addin",
+        "description" : "Publishes current document to the Civis Platform (currently only supports RMarkdown)",
+        "interactive" : false,
+        "name" : "Publish To Civis",
+        "package" : "civis",
+        "title" : ""
+    },
+    "clipr::clipr_output" : {
+        "binding" : "clipr_output",
+        "description" : "Copies the console output of a selected expression to the system clipboard",
+        "interactive" : false,
+        "name" : "Output to clipboard",
+        "package" : "clipr",
+        "title" : ""
+    },
+    "clipr::clipr_result" : {
+        "binding" : "clipr_result",
+        "description" : "Copies the results of a selected expression to the system clipboard",
+        "interactive" : false,
+        "name" : "Value to clipboard",
+        "package" : "clipr",
+        "title" : ""
+    },
+    "colourpicker::colourPickerAddin" : {
+        "binding" : "colourPickerAddin",
+        "description" : "Lets you easily select colours.",
+        "interactive" : true,
+        "name" : "Colour Picker",
+        "package" : "colourpicker",
+        "title" : ""
+    },
+    "colourpicker::plotHelperAddin" : {
+        "binding" : "plotHelperAddin",
+        "description" : "Interactively pick colours to use in your plot.",
+        "interactive" : true,
+        "name" : "Plot Colour Helper",
+        "package" : "colourpicker",
+        "title" : ""
+    },
+    "convertr::convert_gadget" : {
+        "binding" : "convert_gadget",
+        "description" : "Convert numeric vectors between units",
+        "interactive" : true,
+        "name" : "Unit Converter",
+        "package" : "convertr",
+        "title" : ""
+    },
+    "covr::addin_report" : {
+        "binding" : "addin_report",
+        "description" : "Calculates the package test coverage and opens a report, using `covr::report()`",
+        "interactive" : false,
+        "name" : "Calculate package test coverage",
+        "package" : "covr",
+        "title" : ""
+    },
+    "cronR::cron_rstudioaddin" : {
+        "binding" : "cron_rstudioaddin",
+        "description" : "Use cron to schedule your R scripts (Linux/Unix)",
+        "interactive" : true,
+        "name" : "Schedule R scripts on Linux/Unix",
+        "package" : "cronR",
+        "title" : ""
+    },
+    "data.world::" : {
+        "binding" : "",
+        "description" : "",
+        "interactive" : true,
+        "name" : "",
+        "package" : "data.world",
+        "title" : ""
+    },
+    "data.world::add_insight_addin" : {
+        "binding" : "add_insight_addin",
+        "description" : "Adds an insight to a data.world project",
+        "interactive" : true,
+        "name" : "New insight",
+        "package" : "data.world",
+        "title" : ""
+    },
+    "datapasta::df_paste" : {
+        "binding" : "df_paste",
+        "description" : "Pastes a table from the clipboard to the editor as a data.frame definition",
+        "interactive" : false,
+        "name" : "Paste as data.frame",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datapasta::tribble_paste" : {
+        "binding" : "tribble_paste",
+        "description" : "Pastes a table from the clipboard to the editor as a tribble definition",
+        "interactive" : false,
+        "name" : "Paste as tribble",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datapasta::vector_paste" : {
+        "binding" : "vector_paste",
+        "description" : "Pastes data from the clipboard to the editor as character vector, formatted horizontally on a single line.",
+        "interactive" : false,
+        "name" : "Paste as vector",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datapasta::vector_paste_vertical" : {
+        "binding" : "vector_paste_vertical",
+        "description" : "Pastes data from the clipboard to the editor as character vector, formatted vertically, one element per line.",
+        "interactive" : false,
+        "name" : "Paste as vector (vertical)",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datapasta::zzz_rs_dfiddle" : {
+        "binding" : "zzz_rs_dfiddle",
+        "description" : "Take a selection and fiddle it to something better (maybe).",
+        "interactive" : false,
+        "name" : "Fiddle Selection",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datapasta::zzz_rs_toggle_quotes" : {
+        "binding" : "zzz_rs_toggle_quotes",
+        "description" : "Toggle quotes in a vector defintion",
+        "interactive" : false,
+        "name" : "Toggle Vector Quotes",
+        "package" : "datapasta",
+        "title" : ""
+    },
+    "datasets.load::datasets.load" : {
+        "binding" : "datasets.load",
+        "description" : "Select one or several datasets from all installed packages",
+        "interactive" : true,
+        "name" : "Datasets Load",
+        "package" : "datasets.load",
+        "title" : ""
+    },
+    "dplyrAssist::dplyrAssist" : {
+        "binding" : "dplyrAssist",
+        "description" : "A Shiny App for Teaching and Learning Data Manipulation Using 'dplyr'",
+        "interactive" : true,
+        "name" : "dplyrAssist",
+        "package" : "dplyrAssist",
+        "title" : ""
+    },
+    "editData::editData" : {
+        "binding" : "editData",
+        "description" : "Editing A 'data.frame'",
+        "interactive" : true,
+        "name" : "editData",
+        "package" : "editData",
+        "title" : ""
+    },
+    "ggExtra::ggMarginalGadgetAddin " : {
+        "binding" : "ggMarginalGadgetAddin ",
+        "description" : "Add marginal plots to ggplot2",
+        "interactive" : true,
+        "name" : "ggplot2 Marginal Plots",
+        "package" : "ggExtra",
+        "title" : ""
+    },
+    "ggThemeAssist::ggThemeAssistAddin" : {
+        "binding" : "ggThemeAssistAddin",
+        "description" : "Customize your ggplot theme",
+        "interactive" : true,
+        "name" : "ggplot Theme Assistant",
+        "package" : "ggThemeAssist",
+        "title" : ""
+    },
+    "ggedit::ggeditAddin" : {
+        "binding" : "ggeditAddin",
+        "description" : "Edit ggplot layers aesthetics and theme elements.",
+        "interactive" : true,
+        "name" : "ggedit",
+        "package" : "ggedit",
+        "title" : ""
+    },
+    "ggplotAssist::ggplotAssist" : {
+        "binding" : "ggplotAssist",
+        "description" : "A Shiny App for Teaching and Learning 'ggplot2'",
+        "interactive" : true,
+        "name" : "ggplotAssist",
+        "package" : "ggplotAssist",
+        "title" : ""
+    },
+    "giphyr::gif_Addin" : {
+        "binding" : "gif_Addin",
+        "description" : "Search GIFs through Giphy API and use them in Rmarkdown documents",
+        "interactive" : true,
+        "name" : "Add GIFs",
+        "package" : "giphyr",
+        "title" : ""
+    },
+    "gitgadget::gitgadget" : {
+        "binding" : "gitgadget",
+        "description" : "Rstudio addin for version control and assignment management using git",
+        "interactive" : true,
+        "name" : "Git Gadget",
+        "package" : "gitgadget",
+        "title" : ""
+    },
+    "googleAnalyticsR::gadget_GASegment" : {
+        "binding" : "gadget_GASegment",
+        "description" : "Helper to construct GAv4 API calls.",
+        "interactive" : true,
+        "name" : "GAv4 Segment Builder",
+        "package" : "googleAnalyticsR",
+        "title" : ""
+    },
+    "googleAuthR::gar_gadget" : {
+        "binding" : "gar_gadget",
+        "description" : "Authenticate with Google APIs",
+        "interactive" : true,
+        "name" : "Google API Auth",
+        "package" : "googleAuthR",
+        "title" : ""
+    },
+    "liftr::addin_lift" : {
+        "binding" : "addin_lift",
+        "description" : "Containerize the R Markdown document.",
+        "interactive" : false,
+        "name" : "📦 Containerize",
+        "package" : "liftr",
+        "title" : ""
+    },
+    "liftr::addin_lift_render_docker" : {
+        "binding" : "addin_lift_render_docker",
+        "description" : "Containerize and render the R Markdown document.",
+        "interactive" : false,
+        "name" : "🎉 Render",
+        "package" : "liftr",
+        "title" : ""
+    },
+    "liftr::addin_prune_dangling" : {
+        "binding" : "addin_prune_dangling",
+        "description" : "Remove any dangling Docker containers and images.",
+        "interactive" : false,
+        "name" : "✂️ Prune Dangling",
+        "package" : "liftr",
+        "title" : ""
+    },
+    "liftr::addin_prune_image" : {
+        "binding" : "addin_prune_image",
+        "description" : "Remove the built Docker image used to render the current R Markdown document.",
+        "interactive" : false,
+        "name" : "🗑 Remove Image",
+        "package" : "liftr",
+        "title" : ""
+    },
+    "listviewer::jsoneditAddin" : {
+        "binding" : "jsoneditAddin",
+        "description" : "View a list in jsonedit",
+        "interactive" : false,
+        "name" : "jsonedit",
+        "package" : "listviewer",
+        "title" : ""
+    },
+    "pipefittr::pipefittrAddin" : {
+        "binding" : "pipefittrAddin",
+        "description" : "Formate to piping style",
+        "interactive" : true,
+        "name" : "pipefittr",
+        "package" : "pipefittr",
+        "title" : ""
+    },
+    "questionr::icut" : {
+        "binding" : "icut",
+        "description" : "Interactively generate code for dividing the range of a numeric variable",
+        "interactive" : true,
+        "name" : "Numeric range dividing",
+        "package" : "questionr",
+        "title" : ""
+    },
+    "questionr::iorder" : {
+        "binding" : "iorder",
+        "description" : "Interactively generate code for a variable levels reordering",
+        "interactive" : true,
+        "name" : "Levels ordering",
+        "package" : "questionr",
+        "title" : ""
+    },
+    "questionr::irec" : {
+        "binding" : "irec",
+        "description" : "Interactively generate code for a variable levels recoding",
+        "interactive" : true,
+        "name" : "Levels recoding",
+        "package" : "questionr",
+        "title" : ""
+    },
+    "radiant::radiant" : {
+        "binding" : "radiant",
+        "description" : "Start Radiant",
+        "interactive" : true,
+        "name" : "Radiant",
+        "package" : "radiant",
+        "title" : ""
+    },
+    "radiant::update_radiant" : {
+        "binding" : "update_radiant",
+        "description" : "Update Radiant to the latest version",
+        "interactive" : true,
+        "name" : "Update Radiant",
+        "package" : "radiant",
+        "title" : ""
+    },
+    "rcrossref::crAddins" : {
+        "binding" : "crAddins",
+        "description" : "Add a new bibliography entry through Crossref DOI",
+        "interactive" : true,
+        "name" : "Add Crossref Citations",
+        "package" : "rcrossref",
+        "title" : ""
+    },
+    "rdoxygen::doxy" : {
+        "binding" : "doxy",
+        "description" : "creates doxygen documentation for source code",
+        "interactive" : false,
+        "name" : "rdoxygenize",
+        "package" : "rdoxygen",
+        "title" : ""
+    },
+    "reprex::reprex_addin" : {
+        "binding" : "reprex_addin",
+        "description" : "Run `reprex::reprex()` to prepare a reproducible example for sharing.",
+        "interactive" : true,
+        "name" : "Render reprex",
+        "package" : "reprex",
+        "title" : ""
+    },
+    "rhandsontable::editAddin" : {
+        "binding" : "editAddin",
+        "description" : "Interactively edit a data frame.",
+        "interactive" : true,
+        "name" : "Edit a Data Frame",
+        "package" : "rhandsontable",
+        "title" : ""
+    },
+    "roadoi::roadoi_addin" : {
+        "binding" : "roadoi_addin",
+        "description" : "Finding free copies of scholarly articles via oaDOI.",
+        "interactive" : true,
+        "name" : "Find free full-texts",
+        "package" : "roadoi",
+        "title" : ""
+    },
+    "sinew::interOxyAddIn" : {
+        "binding" : "interOxyAddIn",
+        "description" : "Insert roxygen2 comments interactively",
+        "interactive" : true,
+        "name" : "interactiveOxygen",
+        "package" : "sinew",
+        "title" : ""
+    },
+    "sinew::oxygenAddin" : {
+        "binding" : "oxygenAddin",
+        "description" : "Create scaffolding for roxygen2 header",
+        "interactive" : false,
+        "name" : "createOxygen",
+        "package" : "sinew",
+        "title" : ""
+    },
+    "spAddins::rmd_a_bold" : {
+        "binding" : "rmd_a_bold",
+        "description" : "Enclose selected text with `**` and `**`.",
+        "interactive" : false,
+        "name" : "Rmd: Bold (** **)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_bold2" : {
+        "binding" : "rmd_a_bold2",
+        "description" : "Enclose selected text with `__` and `__`.",
+        "interactive" : false,
+        "name" : "Rmd: Bold (__ __)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_bold_italics" : {
+        "binding" : "rmd_a_bold_italics",
+        "description" : "Enclose selected text with `**_` and `_**`.",
+        "interactive" : false,
+        "name" : "Rmd: Bold italics (**_ _**)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_italics" : {
+        "binding" : "rmd_a_italics",
+        "description" : "Enclose selected text with `_` and `_`.",
+        "interactive" : false,
+        "name" : "Rmd: Italics (_ _)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_italics2" : {
+        "binding" : "rmd_a_italics2",
+        "description" : "Enclose selected text with `*` and `*`.",
+        "interactive" : false,
+        "name" : "Rmd: Italics (* *)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_strikethrough" : {
+        "binding" : "rmd_a_strikethrough",
+        "description" : "Enclose selected text with ~~ and ~~.",
+        "interactive" : false,
+        "name" : "Rmd: Strike through (~~ ~~)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_subscript" : {
+        "binding" : "rmd_a_subscript",
+        "description" : "Enclose selected text with ~ and ~.",
+        "interactive" : false,
+        "name" : "Rmd: Subscript (~ ~)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_a_superscript" : {
+        "binding" : "rmd_a_superscript",
+        "description" : "Enclose selected text with ^ and ^.",
+        "interactive" : false,
+        "name" : "Rmd: Superscript (^ ^)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_1" : {
+        "binding" : "rmd_b_heading_1",
+        "description" : "Insert #",
+        "interactive" : false,
+        "name" : "Rmd: Heading 1 (#)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_1_title" : {
+        "binding" : "rmd_b_heading_1_title",
+        "description" : "Underline with ======",
+        "interactive" : false,
+        "name" : "Rmd: Heading 1 (======)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_2" : {
+        "binding" : "rmd_b_heading_2",
+        "description" : "Insert ##",
+        "interactive" : false,
+        "name" : "Rmd: Heading 2 (##)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_2_subtitle" : {
+        "binding" : "rmd_b_heading_2_subtitle",
+        "description" : "Underline with ------",
+        "interactive" : false,
+        "name" : "Rmd: Heading 2 (------)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_3" : {
+        "binding" : "rmd_b_heading_3",
+        "description" : "Insert ###",
+        "interactive" : false,
+        "name" : "Rmd: Heading 3 (###)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_4" : {
+        "binding" : "rmd_b_heading_4",
+        "description" : "Insert ####",
+        "interactive" : false,
+        "name" : "Rmd: Heading 4 (####)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_5" : {
+        "binding" : "rmd_b_heading_5",
+        "description" : "Insert #####",
+        "interactive" : false,
+        "name" : "Rmd: Heading 5 (#####)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_b_heading_6" : {
+        "binding" : "rmd_b_heading_6",
+        "description" : "Insert ######",
+        "interactive" : false,
+        "name" : "Rmd: Heading 6 (######)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_code_block" : {
+        "binding" : "rmd_code_block",
+        "description" : "Enclose selected lines with ``` and ```.",
+        "interactive" : false,
+        "name" : "Rmd: Code block (``` ```)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_code_block_r" : {
+        "binding" : "rmd_code_block_r",
+        "description" : "Enclose selected lines with ```{r} and ```.",
+        "interactive" : false,
+        "name" : "Rmd: R code block (```{r}  ```)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_code_inline" : {
+        "binding" : "rmd_code_inline",
+        "description" : "Enclose selected text with ` and `.",
+        "interactive" : false,
+        "name" : "Rmd: Code inline (` `)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_code_inline_r" : {
+        "binding" : "rmd_code_inline_r",
+        "description" : "Enclose selected text with `r and `.",
+        "interactive" : false,
+        "name" : "Rmd: R code inline (`r  `)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_equation_block" : {
+        "binding" : "rmd_equation_block",
+        "description" : "Enclose selected text with `$$`.",
+        "interactive" : false,
+        "name" : "Rmd: Equation block ($$ $$)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_equation_block2" : {
+        "binding" : "rmd_equation_block2",
+        "description" : "Enclose selected text with `\\[` and `\\]`.",
+        "interactive" : false,
+        "name" : "Rmd: Equation block (\\[   \\])",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_equation_inline" : {
+        "binding" : "rmd_equation_inline",
+        "description" : "Enclose selected text with `$`.",
+        "interactive" : false,
+        "name" : "Rmd: Equation inline ($ $)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_lettered" : {
+        "binding" : "rmd_list_lettered",
+        "description" : "Make lettered list (level 1).",
+        "interactive" : false,
+        "name" : "Rmd: lettered list (level 1: a, b, c, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_lettered_2" : {
+        "binding" : "rmd_list_lettered_2",
+        "description" : "Make lettered list (level 2).",
+        "interactive" : false,
+        "name" : "Rmd: lettered list (level 2: a, b, c, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_numbered" : {
+        "binding" : "rmd_list_numbered",
+        "description" : "Make numbered list (level 1).",
+        "interactive" : false,
+        "name" : "Rmd: numbered list (level 1: 1, 2, 3, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_numbered_2" : {
+        "binding" : "rmd_list_numbered_2",
+        "description" : "Make numbered list (level 2).",
+        "interactive" : false,
+        "name" : "Rmd: numbered list (level 2: 1, 2, 3, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_unordered" : {
+        "binding" : "rmd_list_unordered",
+        "description" : "Make unordered list (level 1).",
+        "interactive" : false,
+        "name" : "Rmd: unordered list (level 1: -, -, -, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_list_unordered_2" : {
+        "binding" : "rmd_list_unordered_2",
+        "description" : "Make unordered list (level 2).",
+        "interactive" : false,
+        "name" : "Rmd: unordered list (level 2: +, +, +, ...)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rmd_master_list" : {
+        "binding" : "rmd_master_list",
+        "description" : "Make masterlist list.",
+        "interactive" : false,
+        "name" : "Rmd: master list",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_arrow_lr" : {
+        "binding" : "rs_insert_arrow_lr",
+        "description" : "Insert `->` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert ->",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_arrow_lr2" : {
+        "binding" : "rs_insert_arrow_lr2",
+        "description" : "Insert `->>` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert ->>",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_arrow_rl" : {
+        "binding" : "rs_insert_arrow_rl",
+        "description" : "Insert `<-` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert <-",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_arrow_rl2" : {
+        "binding" : "rs_insert_arrow_rl2",
+        "description" : "Insert `<<-` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert <<-",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_exposition_pipe" : {
+        "binding" : "rs_insert_exposition_pipe",
+        "description" : "Insert `%$%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %$%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_infix_R" : {
+        "binding" : "rs_insert_infix_R",
+        "description" : "Insert `%R%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %R%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_infix_in" : {
+        "binding" : "rs_insert_infix_in",
+        "description" : "Insert `%in%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %in%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_infix_not_in" : {
+        "binding" : "rs_insert_infix_not_in",
+        "description" : "Insert `%!in%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %!in%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_line_ds" : {
+        "binding" : "rs_insert_line_ds",
+        "description" : "Insert sequence of symbols \"=\".",
+        "interactive" : false,
+        "name" : "Insert double straight line (=====)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_line_ss" : {
+        "binding" : "rs_insert_line_ss",
+        "description" : "Insert sequence of symbols \"-\".",
+        "interactive" : false,
+        "name" : "Insert single straight line (-----)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_line_sw" : {
+        "binding" : "rs_insert_line_sw",
+        "description" : "Insert sequence of symbols \"~\".",
+        "interactive" : false,
+        "name" : "Insert single wavy line (~~~~~)",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_matrix_multiplication" : {
+        "binding" : "rs_insert_matrix_multiplication",
+        "description" : "Insert `%*%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %*%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_pipe" : {
+        "binding" : "rs_insert_pipe",
+        "description" : "Insert `%>%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %>%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_tee_pipe" : {
+        "binding" : "rs_insert_tee_pipe",
+        "description" : "Insert `%T>%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %T>%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_insert_update_pipe" : {
+        "binding" : "rs_insert_update_pipe",
+        "description" : "Insert `%<>%` at the cursor position.",
+        "interactive" : false,
+        "name" : "Insert %<>%",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_replace_slash_b2fw" : {
+        "binding" : "rs_replace_slash_b2fw",
+        "description" : "Replaces \\ with / in the selected text.",
+        "interactive" : false,
+        "name" : "Replace \\ with /",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_replace_slash_bd2s" : {
+        "binding" : "rs_replace_slash_bd2s",
+        "description" : "Replaces \\\\ with \\ in the selected text.",
+        "interactive" : false,
+        "name" : "Replace \\\\ with \\",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_replace_slash_bs2d" : {
+        "binding" : "rs_replace_slash_bs2d",
+        "description" : "Replaces \\ with \\\\ in the selected text.",
+        "interactive" : false,
+        "name" : "Replace \\ with \\\\",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "spAddins::rs_replace_slash_fw2b" : {
+        "binding" : "rs_replace_slash_fw2b",
+        "description" : "Replaces / with \\ in the selected text.",
+        "interactive" : false,
+        "name" : "Replace / with \\",
+        "package" : "spAddins",
+        "title" : ""
+    },
+    "styler::style_active_file" : {
+        "binding" : "style_active_file",
+        "description" : "Pretty-print active file",
+        "interactive" : true,
+        "name" : "Style active file",
+        "package" : "styler",
+        "title" : ""
+    },
+    "styler::style_pkg" : {
+        "binding" : "style_pkg",
+        "description" : "Pretty-print package source code",
+        "interactive" : true,
+        "name" : "Style package",
+        "package" : "styler",
+        "title" : ""
+    },
+    "styler::style_selection" : {
+        "binding" : "style_selection",
+        "description" : "Pretty-print selection",
+        "interactive" : true,
+        "name" : "Style selection",
+        "package" : "styler",
+        "title" : ""
+    },
+    "testit::insert_identical" : {
+        "binding" : "insert_identical",
+        "description" : "Insert the infix operator %==% from testit.",
+        "interactive" : false,
+        "name" : "Insert %==%",
+        "package" : "testit",
+        "title" : ""
+    },
+    "testthis::lest_this" : {
+        "binding" : "lest_this",
+        "description" : "Calls `devtools::load_all()` followed by `testthat::test_file` on\n the associated test file of the currently open file (usually\n \"tests/test_that/test_CURRENT_FILE_NAME.R\")",
+        "interactive" : true,
+        "name" : "Load and test",
+        "package" : "testthis",
+        "title" : ""
+    },
+    "testthis::open_testfile" : {
+        "binding" : "open_testfile",
+        "description" : "Jump back and forth between the currently open file and its\n associated test file (usually \"tests/test_that/test_CURRENT_FILE_NAME.R\").",
+        "interactive" : false,
+        "name" : "Open testfile",
+        "package" : "testthis",
+        "title" : ""
+    },
+    "testthis::test_this" : {
+        "binding" : "test_this",
+        "description" : "Calls testthat::test_file on the associated test file of the\n currently open file (usually \"tests/test_that/test_CURRENT_FILE_NAME.R\")",
+        "interactive" : true,
+        "name" : "Test this file",
+        "package" : "testthis",
+        "title" : ""
+    },
+    "testthis::test_with_skip" : {
+        "binding" : "test_with_skip",
+        "description" : "same as `devtools::test()`, but skips files that contain \"#* @skip\"",
+        "interactive" : true,
+        "name" : "Test Package (with skip)",
+        "package" : "testthis",
+        "title" : ""
+    },
+    "texPreview::texAddin" : {
+        "binding" : "texAddin",
+        "description" : "Preview Snippets of Tex in internal viewer.",
+        "interactive" : false,
+        "name" : "texPreview",
+        "package" : "texPreview",
+        "title" : ""
+    },
+    "tfruns::add_in_training_run" : {
+        "binding" : "add_in_training_run",
+        "description" : "Execute a training run with the current source document",
+        "interactive" : false,
+        "name" : "Training Run",
+        "package" : "tfruns",
+        "title" : ""
+    },
+    "tfruns::add_in_view_latest_run" : {
+        "binding" : "add_in_view_latest_run",
+        "description" : "View the most recent training run",
+        "interactive" : false,
+        "name" : "View Latest Run",
+        "package" : "tfruns",
+        "title" : ""
+    },
+    "tfruns::add_in_view_run_history" : {
+        "binding" : "add_in_view_run_history",
+        "description" : "View all training runs",
+        "interactive" : false,
+        "name" : "View Run History",
+        "package" : "tfruns",
+        "title" : ""
+    },
+    "tinsel::source_decoratees_addin" : {
+        "binding" : "source_decoratees_addin",
+        "description" : "Source decoratees (decorated functions) from the active file.",
+        "interactive" : false,
+        "name" : "Source Active File Decoratees",
+        "package" : "tinsel",
+        "title" : ""
+    },
+    "tribe::insertPipeWithAttributesPropagationAddin" : {
+        "binding" : "insertPipeWithAttributesPropagationAddin",
+        "description" : "Inserts the pipe %@>%",
+        "interactive" : false,
+        "name" : "Insert %@>%",
+        "package" : "tribe",
+        "title" : ""
+    },
+    "vdiffr::vdiffrAddin" : {
+        "binding" : "vdiffrAddin",
+        "description" : "Compare and validate graphical test cases using vdiffr",
+        "interactive" : true,
+        "name" : "Manage visual test cases",
+        "package" : "vdiffr",
+        "title" : ""
+    },
+    "xaringan::inf_mr" : {
+        "binding" : "inf_mr",
+        "description" : "Run xaringan::infinite_moon_reader() to live preview slides or any\n   single-HTML-file R Markdown output.",
+        "interactive" : true,
+        "name" : "Infinite Moon Reader",
+        "package" : "xaringan",
+        "title" : ""
+    }
+}
