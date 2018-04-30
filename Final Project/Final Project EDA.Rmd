@@ -17,7 +17,7 @@ The 720 rows (each representing a cluster) are divied into a 8 clusters x 90 blo
 The file includes 5,551 rows (each representing an enrolled compound), and maps to compound characteristics
 
 ##### Adherence (`washb-bangladesh-uptake-public`)
-The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 of the original 5551 did for all 3 years. Adherence was also measured via counts of lipid-based nutrient supplements (`lnsn`, `lnsp`) and those reported by the mother in the last week (`rlsn`, `rlnsp`). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or > 28 are implausible.
+The file includes 14,906 rows which map to a unique (compound, date) measurement. Attrition across the 3 years means that every compound does not have 3 measurements, but 4639 of the original 5551 did for all 3 years. Adherence was also measured via counts of lipid-based nutrient supplements (`lnsn`, `lnsp`) and those reported by the mother in the last week (`rlns`, `rlnsp`). The expected number for 100% adherence is 2 sachets x 7 days = 14 sachets/week. Values that are negative or > 28 are implausible.
 
 ##### Diarrhea Measurements (`washb-bangladesh-diar-public`)
 This file includes 22,594 observations, measuring diarrheal status from children from the birth cohort and children living in the compound who were <36 months at enrollment time. Notably, `tchild` takes on the value `Target child` or `Sibling`, where `Sibling` refers to not only true siblings, but also age-eligible children from other families in the same compound. 
