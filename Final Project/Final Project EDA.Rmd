@@ -164,7 +164,11 @@ mergedData = diarrheaMeasurement.limited %>%
     left_join(compoundCharacteristics.limited) %>%
     left_join(anthropometricMeasurements.limited)
 
-mergedData %>% nrow
+
+mergedAdherence = diarrheaMeasurement.limited %>%
+    left_join(compoundTreatment) %>%
+    left_join(anthropometricMeasurements.limited) %>%
+    left_join(compoundAdherence.limited)
 
 setwd(paste(prefix, "/Cleaned", sep=""))
 
@@ -174,6 +178,7 @@ write.csv(compoundCharacteristics.limited, "washb-bangladesh-compoundCharacteris
 write.csv(compoundAdherence.limited, "washb-bangladesh-compoundAdherence-limited-public.csv")
 write.csv(anthropometricMeasurements.limited, "washb-bangladesh-anthropometricMeasurements-limited-public.csv")
 write.csv(mergedData, "washb-bangladesh-merged-public.csv")
+write.csv(mergedAdherence, "washb-bangladesh-mergedAdherence-public.csv")
 ```
 
 

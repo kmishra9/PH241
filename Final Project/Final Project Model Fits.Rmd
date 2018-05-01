@@ -1,5 +1,5 @@
 ---
-title: "PH241 Final Project - Model Fits"
+title: "PH241 Final Project - Model Fits for LNSP"
 output: html_notebook
 ---
 
@@ -10,6 +10,7 @@ output: html_notebook
 library(dplyr)
 library(data.table)
 library(DataExplorer)
+library(lmtest)
 
 # Setting File Paths
 prefix = "~/PH241/Final Project/Data/Cleaned/"
@@ -54,25 +55,93 @@ nutritionArmData %>% head
 nutritionArmData %>% nrow
 ```
 Now that we have our data, lets fit our null hypothesis model, examining only the effect of % expected consumption of LNS satchets (`lnsp`), where 14 is the "expected" number of satchets consumed per week and the actual consumption is extrapolated out to this weekly amount. Let's also ensure there are no outliers in our `lnsp` and remove them if there are -- outliers are < 0% or > 100% or NA. 
-```{r}
+```{r message=FALSE}
+# Prior to cleaning
 nutritionArmData %>% select(allCauseDiarrhea, lnsp) %>% summary
 
+# Removing rows where our explanatory variable is invalid
 nutritionArmDataCleaned = nutritionArmData %>% filter(!is.na(lnsp) & (0 <= lnsp & lnsp <= 100))
 
+# What changed?
 nutritionArmDataCleaned %>% select(allCauseDiarrhea, lnsp) %>% summary
 
+# Fitting and reporting on null hypothesis model
 fit1.null = glm(formula=allCauseDiarrhea~lnsp, family="binomial", data=nutritionArmDataCleaned)
-
 fit.report(fit1.null)
 ```
 Some initial observations include:
-- Yikes, adherence is pretty low in this arm of the trial. It just isn't the case that many people are consuming all of the expected sachets, and that's a valuable source of information about interventions like this which require a lot of "remembering"" and effort from the people receiving the resources. 
+
+- Yikes, adherence is pretty low in this arm of the trial. It just isn't the case that many people are consuming all of the expected sachets, and that's a valuable source of information about interventions like this which require a lot of "remembering"" and effort from the people receiving the resources. The highest level of adherence was consumption of just 31% of "assigned" satchets.
 - The odds of contracting some form of diarrhea are estimated at around .12
-- Though not statistically significant, receiving the `lnsp` supplement and actually adhering to it increased the odds of diarrhea by 1.02 times per percentage point increase. We should be wary of this, however, as there may be confounding present, where less food secure and lower income/education compounds have a greater incentive to consume the satchets as a source of nutrition in the absence of any other food. 
+- Though not statistically significant, receiving the `lnsp` supplement and actually adhering corresponded to an increased odds ratio of diarrhea by 1.02 times per percentage point of consumption increase. We should be wary of this, however, as there may be confounding present, where less food secure and lower income/education compounds have a greater incentive to consume the satchets as a source of nutrition in the absence of any other food.
+- This model corresponds to our null hypothesis model, which states that all the covariate coefficients are 0 (versus the alternative that at least one of them is non-zero, which we'll test next).
 
-Now, let's fit using some of the covariates that exist. By including covariates that are potential confounders, we are using implicit covariate adjustment methods. 
+Now, let's fit using some of the covariates that exist. By including covariates that are potential confounders, we are using implicit covariate adjustment methods. Let's adjust for food insecurity first, which is measured continuosly (between 0 and 27) in the `hfias` variable, which is a measure of [Household Food Insecurity Access Scale](https://inddex.nutrition.tufts.edu/data4diets/indicator/household-food-insecurity-access-scale-hfias).
+```{r message=FALSE}
+# Fitting and reporting on adjusted model
+fit2.adj = glm(formula=allCauseDiarrhea~lnsp+hfias, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit2.adj)
 
-Now, let's directly adjust for confounding with stratification and different model fits in each stratum.
+# Fitting and reporting on model testing for interaction
+fit2.int = glm(formula=allCauseDiarrhea~lnsp+hfias+hfias*lnsp, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit2.int)
+```
+In our adjustment for confounding model, simply including the `hfias` score doesn't shift the coefficient for `lnsp` by much at all. However, in the case of our interaction model, the sign of our `lnsp` variable swings to the negative (which we would expect) and the lnsp:hfias variable is also close to being significant (which we would also expect, given that large values of this variable occur when both food insecurity and satchet consumption are high and smaller values occur when food insecurity and satchet consumption are low). This indicates that more research is needed into the the interaction effects between food security and LNS satchet consumption in interventions like this, as there is not enough evidence to conlude interaction is occurring (overlapping CIs in lnsp still, due to lack of power).
 
+Next up, let's investigate another possible confounder/effect modifier: wealth. Because we have so many discrete snapshots of variables that could indicate wealth without actually have some sort of income variable, we'll create a variable that will serve as a proxy for wealth. This is definitely not perfect but it ideally serves as a continuous approximation of wealth.
+```{r message=FALSE}
+wealthIndicators = nutritionArmDataCleaned %>% 
+    select(Ncomp, landacre, watmin, potty, roof, walls, floor, cement, elec, asset_radio, 
+           asset_tvbw, asset_tvcol, asset_refrig, asset_bike, asset_moto, asset_sewmach, 
+           asset_phone, asset_wardrobe, asset_table, asset_chair, asset_clock, asset_khat, 
+           asset_chouki, asset_mobile, n_asset_mobile)
 
+# Because the number of people in a compound likely is negatively correlated with wealth, we'll make that variable negative and scale it down a bit so its not the dominant indicator
+wealthIndicators$Ncomp = wealthIndicators$Ncomp * (-1/10)
+wealthIndicators$landacre = wealthIndicators$landacre * 10
 
+nutritionArmDataCleaned$wealth = wealthIndicators %>% rowSums(na.rm=TRUE)
+
+nutritionArmDataCleaned %>% select(wealth) %>% summary
+```
+Now, our third set of fits.
+```{r message=FALSE}
+# Fitting and reporting on adjusted model
+fit3.adj = glm(formula=allCauseDiarrhea~lnsp+wealth, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit3.adj)
+
+# Fitting and reporting on model testing for interaction
+fit3.int = glm(formula=allCauseDiarrhea~lnsp+wealth+wealth*lnsp, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit3.int)
+```
+Based on these fits, there is not enough evidence to conclude that wealth is either an effect modifier or a confounder on the relationship between LNS satchet consumption and diarrhea. Though our coefficient for `lnsp` does jump to 1.2 in `fit3.int` (which is rather non-intuitive -- increased consumption of the nutritional supplements shouldn't increase diarrheal incidence, though other forms of confounding/interaction may still be occurring), the CIs for our initial coefficient and wealth-interaction coefficient overlap. It is interesting that `lnsp:wealth` has a protective effect against diarrhea, even though it is statistically not significant (this is what we would expect, given that high values indicate high wealth, high consumption, and low values indicate low wealth and low consumption -- the largest protective effects are for people with high wealth and high consumption). In addition, wealth has a not significant protective effect against diarrhea in our confounding model, but this doesn't alter the coefficient of `lnsp` very much, so we cannot conclude confounding is present.
+
+Let's look at a final fit including both wealth and food security status.
+```{r}
+# Fitting and reporting on an adjusted model
+fit4.adj = glm(formula=allCauseDiarrhea~lnsp+hfias+wealth, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit4.adj)
+
+# Fitting and reporting on model testing for interaction
+fit4.int = glm(formula=allCauseDiarrhea~lnsp+hfias+wealth+wealth*lnsp+hfias*lnsp, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit4.int)
+```
+Adjusting for confounding does not yield a model that tells us much, and these variables are just not significant at all. I don't anticipate this models prediction ability will be very good. In looking at the interaction model, there is not enough evidence to conclude that there is interaction, but the coefficients are at least more intuitive.
+
+Now, let's compare models.
+```{r}
+# Fit 2 - Food Security Status Adjusted vs Interaction
+lrtest(fit2.adj, fit2.int)
+
+# Fit 3 - Wealth Adjusted vs Interaction
+lrtest(fit3.adj, fit3.int)
+
+# Fit 4 - Wealth/Food Security Adjusted vs Interaction
+lrtest(fit4.adj, fit4.int)
+
+# Null vs Interaction Models
+lrtest(fit1.null, fit2.int)
+lrtest(fit1.null, fit3.int)
+lrtest(fit1.null, fit4.int)
+```
+Thus, the best model to fit `allCauseDiarrhea` is the `lnsp + hfias + hfias * lnsp` model, though it still wasn't significantly different from the null hypothesis model.
