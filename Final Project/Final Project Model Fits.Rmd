@@ -16,7 +16,8 @@ library(lmtest)
 prefix = "~/PH241/Final Project/Data/Cleaned/"
 setwd(prefix)
 filepaths = c("washb-bangladesh-merged-public.csv",
-              "washb-bangladesh-compoundAdherence-limited-public.csv"
+              "washb-bangladesh-compoundAdherence-limited-public.csv",
+              "washb-bangladesh-mergedAdherence-public.csv"
               )
 
 mergedData = fread(filepaths[1], data.table=FALSE) %>% select(-V1)
@@ -25,10 +26,10 @@ compoundAdherence.limited = fread(filepaths[2], data.table=FALSE) %>% select(-V1
 fit.report = function(fit) {
     # Reporting Log Odds Ratios (Model fit)
     fit %>% summary %>% print
-    writeLines("\n\nORs")
+    writeLines("\n\nConverting coefficient Log scale to linear scale")
     # Reporting Odds Ratios (Coefficients)
     fit %>% coef %>% exp %>% print
-    writeLines("\n\nConfidence Intervals of ORs")
+    writeLines("\n\nConfidence Intervals")
     #Reporting Confidence Intervals of Odds Ratios
     fit %>% confint %>% exp %>% print
     writeLines("\n\n")
@@ -64,6 +65,10 @@ nutritionArmDataCleaned = nutritionArmData %>% filter(!is.na(lnsp) & (0 <= lnsp 
 
 # What changed?
 nutritionArmDataCleaned %>% select(allCauseDiarrhea, lnsp) %>% summary
+
+# Fitting and reporting on constant model
+fit1.constant = glm(formula=allCauseDiarrhea~1, family="binomial", data=nutritionArmDataCleaned)
+fit.report(fit1.constant)
 
 # Fitting and reporting on null hypothesis model
 fit1.null = glm(formula=allCauseDiarrhea~lnsp, family="binomial", data=nutritionArmDataCleaned)
@@ -130,6 +135,9 @@ Adjusting for confounding does not yield a model that tells us much, and these v
 
 Now, let's compare models.
 ```{r}
+# Null vs Constant Model
+lrtest(fit1.constant, fit1.null)
+
 # Fit 2 - Food Security Status Adjusted vs Interaction
 lrtest(fit2.adj, fit2.int)
 
@@ -143,5 +151,46 @@ lrtest(fit4.adj, fit4.int)
 lrtest(fit1.null, fit2.int)
 lrtest(fit1.null, fit3.int)
 lrtest(fit1.null, fit4.int)
+
+# Ensuring our food security interaction model is better than our constant model
+lrtest(fit1.constant, fit2.int)
 ```
-Thus, the best model to fit `allCauseDiarrhea` is the `lnsp + hfias + hfias * lnsp` model, though it still wasn't significantly different from the null hypothesis model.
+Thus, the best model to fit `allCauseDiarrhea` is the `lnsp + hfias + hfias * lnsp` model, though it still wasn't significantly different from the null hypothesis model or even from the constant model.
+
+
+## Examining storeWat
+```{r message=FALSE, warning=FALSE}
+fit1.constant = glm(allCauseDiarrhea ~ 1, data=mergedData, family="binomial")
+fit1.null = glm(allCauseDiarrhea ~ storewat, data = mergedData, family = "binomial")
+
+fit.report(fit1.constant)
+fit.report(fit1.null)
+
+mergedData %>% nrow
+
+#Controlling for momeduy
+fit2.adj = glm(allCauseDiarrhea ~ storewat+tubewell, data = mergedData, 
+               family = binomial())
+
+fit2.int = glm(allCauseDiarrhea ~ storewat+tubewell+tubewell*storewat, data = mergedData, 
+              family = binomial())
+
+
+fit.report(fit2.adj)
+fit.report(fit2.int)
+```
+```{r}
+# Checking that collinearity is not too high
+cor( mergedData %>% select(storewat, tubewell) )
+```
+And examining which model scale is best:
+```{r}
+lrtest(fit1.constant, fit1.null)
+
+lrtest(fit1.null, fit2.adj)
+lrtest(fit1.null, fit2.int)
+
+lrtest(fit2.adj, fit2.int)
+
+```
+
